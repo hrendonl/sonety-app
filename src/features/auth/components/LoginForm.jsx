@@ -53,7 +53,7 @@ export function LoginForm({ onSubmit, isLoading, error: apiError }) {
               }`
             }
           />
-          {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email.message}</p>}
+          {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>}
         </div>
 
         <div>
@@ -84,7 +84,7 @@ export function LoginForm({ onSubmit, isLoading, error: apiError }) {
               {showPassword ? <MdVisibilityOff size={20} /> : <MdVisibility size={20} />}
             </button>
           </div>
-          {errors.password && <p className="mt-1 text-xs text-red-500">{errors.password.message}</p>}
+          {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>}
         </div>
         
         <button
