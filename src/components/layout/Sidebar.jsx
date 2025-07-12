@@ -5,14 +5,14 @@ import { MdPeople, MdMusicVideo, MdEvent, MdSettings, MdOutlineComment, MdClose,
 
 // Datos de ejemplo: 'Generación 12' no tiene imagen para probar el SVG por defecto
 const userGroups = [
-  { id: 'pacto-cartagena', name: 'Pacto Cartagena'},
-  { id: 'generacion-12', name: 'Generación 12' }, // Sin imageUrl
-  { id: 'hillsong', name: 'Hillsong'},
+  { id: 'pacto-cartagena', name: 'Pacto Cartagena', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzGQ2ZpdORlAn30CHcKeLewdnluzQZm5wrDQ&s'},
+  { id: 'generacion-12', name: 'Generación 12', imageUrl: '' }, // Sin imageUrl
+  { id: 'hillsong', name: 'Hillsong', imageUrl: ''},
 ];
 
 // 1. Nuevo componente para el avatar del grupo
 function GroupAvatar({ group }) {
-  if (group.imageUrl) {
+  if (group.imageUrl != '') {
     return <img src={group.imageUrl} alt={group.name} className="w-full h-full object-cover" />;
   }
 
@@ -44,7 +44,7 @@ export default function Sidebar({ isSidebarOpen, setSidebarOpen }) {
       className={`h-full text-white bg-gray-800 flex fixed inset-y-0 left-0 z-40 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
     >
       {/* --- Columna 1: Selector de Grupos --- */}
-      <div className="flex flex-col items-center w-20 p-2 pt-4 bg-gray-900 space-y-2">
+      <div className="flex flex-col items-center p-3 pt-4 bg-gray-900 space-y-5">
         {/* <NavLink to="/dashboard" className="mb-4">
             <img className='h-10 w-10 object-cover' src={Logo} alt="Logo Principal" />
         </NavLink> */}
@@ -52,13 +52,13 @@ export default function Sidebar({ isSidebarOpen, setSidebarOpen }) {
           <button 
             key={group.id} 
             onClick={() => setSelectedGroupId(group.id)}
-            className={`w-12 h-12 rounded-full overflow-hidden transition-all duration-200 ${selectedGroupId === group.id ? 'ring-2 ring-white rounded-lg' : 'hover:rounded-lg'}`}
+            className={`w-10 h-10 rounded-full overflow-hidden hover:cursor-pointer transition-all duration-200 ${selectedGroupId === group.id ? 'ring-2 ring-white rounded-lg' : 'hover:rounded-lg'}`}
           >
             {/* 2. Usar el nuevo componente Avatar */}
             <GroupAvatar group={group} />
           </button>
         ))}
-        <button className="flex items-center justify-center w-12 h-12 bg-gray-700 rounded-full hover:bg-green-500 hover:rounded-lg transition-all duration-200">
+        <button className="flex items-center justify-center w-10 h-10 bg-gray-700 rounded-full hover:bg-green-500 hover:rounded-lg transition-all duration-200">
           <MdAdd size={24} />
         </button>
       </div>
@@ -71,7 +71,7 @@ export default function Sidebar({ isSidebarOpen, setSidebarOpen }) {
             <MdClose size={24} />
           </button>
         </div>}
-        <h2 className="text-xl font-bold mb-5 mt-3 pl-2">
+        <h2 className="text-xl font-bold mb-5 mt-2 pl-2">
             {userGroups.find(g => g.id === selectedGroupId)?.name}
           </h2>
          <nav>

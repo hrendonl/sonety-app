@@ -29,7 +29,7 @@ export default function Header({ setSidebarOpen, user=null }) {
           <MdMenu size={24} />
         </button>
         <div className="text-xl font-bold">
-            <img className='h-8' src={Logo} alt="" />
+            <img className='h-8 lg:h-9' src={Logo} alt="" />
         </div>
       </div>
 
