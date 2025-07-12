@@ -24,7 +24,7 @@ export default function Header({ setSidebarOpen, user=null }) {
         {/* Botón Hamburguesa para móvil */}
         <button 
           onClick={() => setSidebarOpen(true)}
-          className="mr-4 text-white md:hidden"
+          className="mr-4 text-white lg:hidden"
         >
           <MdMenu size={24} />
         </button>

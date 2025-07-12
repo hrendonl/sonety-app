@@ -15,7 +15,7 @@ function App() {
       {/* <Route element={<ProtectedRoute />}> */}
         <Route element={<DashboardLayout />}>
           {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
-          <Route path="/songs" element={<SongsPage />} />
+          <Route path="/groups/:group_name/songs" element={<SongsPage />} />
         </Route>
       {/* </Route> */}
 
