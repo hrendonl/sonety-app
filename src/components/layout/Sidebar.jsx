@@ -65,15 +65,14 @@ export default function Sidebar({ isSidebarOpen, setSidebarOpen }) {
 
       {/* --- Columna 2: Navegación Principal --- */}
       <div className="w-64 p-4 flex flex-col">
-        {isSidebarOpen && <div className="flex items-center justify-between mb-10">
-          <img className='h-8' src={Logo} alt="" />
-          <button onClick={() => setSidebarOpen(false)} className="lg:hidden">
-            <MdClose size={24} />
-          </button>
-        </div>}
-        <h2 className="text-xl font-bold mb-5 mt-2 pl-2">
+       <div className="flex items-center justify-between mb-5 mt-2">
+          <h2 className="text-xl font-bold  pl-2">
             {userGroups.find(g => g.id === selectedGroupId)?.name}
           </h2>
+           {isSidebarOpen && <button onClick={() => setSidebarOpen(false)} className="lg:hidden">
+            <MdClose size={24} />
+          </button>}
+        </div>
          <nav>
         <ul className="space-y-2">
           <li>
