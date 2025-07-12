@@ -79,7 +79,7 @@ export function LoginForm({ onSubmit, isLoading, error: apiError }) {
             <button 
               type="button" 
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-white"
+              className="absolute inset-y-0 right-0 cursor-pointer flex items-center pr-3 text-gray-400 hover:text-white"
             >
               {showPassword ? <MdVisibilityOff size={20} /> : <MdVisibility size={20} />}
             </button>
@@ -90,7 +90,7 @@ export function LoginForm({ onSubmit, isLoading, error: apiError }) {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full py-2 font-medium text-white bg-[#0d73ec] rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-gray-800 disabled:bg-blue-400"
+          className="w-full py-2 font-medium text-white cursor-pointer bg-[#0d73ec] rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-gray-800 disabled:bg-blue-400"
         >
           {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
         </button>

@@ -1,14 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Routes, Route } from "react-router-dom";
 import LoginPage from './features/auth/pages/LoginPage'
+import SongsPage from './features/songs/pages/SongsPage';
+import DashboardLayout from './components/layout/DashboardLayout';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <LoginPage/>
+    <Routes>
+     
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/" element={<LoginPage />} />
+
+     
+      {/* <Route element={<ProtectedRoute />}> */}
+        <Route element={<DashboardLayout />}>
+          {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
+          <Route path="/songs" element={<SongsPage />} />
+        </Route>
+      {/* </Route> */}
+
+      
+      {/* <Route path="*" element={<NotFoundPage />} /> */}
+    </Routes>
   )
 }
 
