@@ -19,7 +19,7 @@ export default function Header({ setSidebarOpen, user=null }) {
   }, [dropdownRef]);
 
   return (
-    <header className="flex items-center justify-between p-4 bg-gray-800 text-white border-b border-gray-700">
+    <header className="flex items-center col-span-2 row-start-1 justify-between p-4 bg-gray-800 text-white border-b border-gray-700">
       <div className="flex items-center">
         {/* Botón Hamburguesa para móvil */}
         <button 
@@ -35,7 +35,7 @@ export default function Header({ setSidebarOpen, user=null }) {
 
       {/* Menú de Usuario */}
       <div className="relative" ref={dropdownRef}>
-        <button onClick={() => setDropdownOpen(!dropdownOpen)} className="block">
+        <button onClick={() => setDropdownOpen(!dropdownOpen)} className="block hover:cursor-pointer">
           {user && user.imageUrl ? (
             <img
               src={user.imageUrl}

@@ -9,18 +9,18 @@ export default function Sidebar({ isSidebarOpen, setSidebarOpen }) {
   return (
     <aside 
       className={`
-        h-full w-64 p-4 text-white bg-gray-800 flex flex-col fixed inset-y-0 left-0 z-40
+        row-start-2 col-start-1 overflow-y-auto h-full w-64 p-4 text-white bg-gray-800 flex flex-col fixed inset-y-0 left-0 z-40
         transform transition-transform duration-300 ease-in-out
         md:relative md:translate-x-0 md:h-auto
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       `}
     >
-      <div className="flex items-center justify-between mb-10">
-        {isSidebarOpen && <img className='h-8' src={Logo} alt="" />}
+     { isSidebarOpen && <div className="flex items-center justify-between mb-10">
+        <img className='h-8' src={Logo} alt="" />
         <button onClick={() => setSidebarOpen(false)} className="md:hidden">
           <MdClose size={24} />
         </button>
-      </div>
+      </div>}
       <nav>
         <ul className="space-y-2">
           <li>
