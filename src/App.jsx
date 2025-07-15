@@ -3,8 +3,12 @@ import { Routes, Route } from "react-router-dom";
 import LoginPage from './features/auth/pages/LoginPage'
 import SongsPage from './features/songs/pages/SongsPage';
 import DashboardLayout from './components/layout/DashboardLayout';
+import ProtectedRoute from './routes/ProtectedRoute';
+import { useContext } from 'react';
+import { AppContext } from './context/AppProvider';
 
 function App() {
+  const {token} = useContext(AppContext)
   return (
     <Routes>
      
@@ -12,12 +16,11 @@ function App() {
       <Route path="/" element={<LoginPage />} />
 
      
-      {/* <Route element={<ProtectedRoute />}> */}
+      <Route element={<ProtectedRoute/>}>
         <Route element={<DashboardLayout />}>
-          {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
           <Route path="/groups/:group_name/songs" element={<SongsPage />} />
         </Route>
-      {/* </Route> */}
+      </Route>
 
       
       {/* <Route path="*" element={<NotFoundPage />} /> */}
