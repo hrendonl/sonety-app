@@ -25,6 +25,10 @@ const reducer = (state, action) => {
   }
 };
 
+const logout = () => {
+  localStorage.clear();
+}
+
 const AppProvider = ({ children }) => {
   const [state, setReducer] = useReducer(reducer, initialState);
 
@@ -35,7 +39,8 @@ const AppProvider = ({ children }) => {
  
   const value = {
     ...state,
-    setApp
+    setApp,
+    logout
   };
 
   return <Provider value={value}>{children}</Provider>;
