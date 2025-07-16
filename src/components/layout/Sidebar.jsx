@@ -43,26 +43,6 @@ export default function Sidebar({ isSidebarOpen, setSidebarOpen }) {
     <aside 
       className={`h-full text-white bg-gray-800 flex fixed inset-y-0 left-0 z-40 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
     >
-      {/* --- Columna 1: Selector de Grupos --- */}
-      {/* <div className="flex flex-col items-center p-3 pt-4 bg-gray-900 space-y-5"> */}
-        {/* <NavLink to="/dashboard" className="mb-4">
-            <img className='h-10 w-10 object-cover' src={Logo} alt="Logo Principal" />
-        </NavLink> */}
-        {/* {userGroups.map((group) => (
-          <button 
-            key={group.id} 
-            onClick={() => setSelectedGroupId(group.id)}
-            className={`w-10 h-10 rounded-full overflow-hidden hover:cursor-pointer transition-all duration-200 ${selectedGroupId === group.id ? 'ring-2 ring-white rounded-lg' : 'hover:rounded-lg'}`}
-          > */}
-            {/* 2. Usar el nuevo componente Avatar */}
-            {/* <GroupAvatar group={group} /> */}
-          {/* </button> */}
-        {/* ))}
-        <button className="flex items-center justify-center w-10 h-10 bg-gray-700 rounded-full hover:bg-green-500 hover:rounded-lg transition-all duration-200">
-          <MdAdd size={24} />
-        </button>
-      </div> */}
-
       {/* --- Columna 2: Navegación Principal --- */}
       <div className="w-64 p-4 flex flex-col">
        {isSidebarOpen && <div className="flex items-center justify-between mb-5 mt-2">
