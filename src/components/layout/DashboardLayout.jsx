@@ -10,7 +10,7 @@ export default function DashboardLayout() {
    <div className="grid h-screen grid-rows-[auto_1fr] grid-cols-[auto_1fr] min-h-0">
         <Header setSidebarOpen={setSidebarOpen} />
         <Sidebar isSidebarOpen={isSidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <main className="row-start-2 col-start-2 overflow-y-auto bg-gray-900 p-6 min-h-0">
+      <main className="row-start-2 col-start-2 overflow-y-auto bg-gray-900 lg:p-6 p-4 min-h-0">
         <Outlet />
       </main>
     </div>
