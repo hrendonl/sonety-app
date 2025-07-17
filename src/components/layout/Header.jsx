@@ -42,11 +42,11 @@ export default function Header({ setSidebarOpen, user=null, currentGroup, userGr
             <img
               src={user.imageUrl}
               alt="Avatar de usuario"
-              className="w-10 h-10 rounded-full object-cover"
+              className="lg:w-9 lg:h-9 h-8 w-8 rounded-full object-cover"
             />
           ) : (
             // SVG por defecto si no hay imagen
-            <div className="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center">
+            <div className="lg:w-9 lg:h-9 h-8 w-8 rounded-full bg-gray-600 flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
