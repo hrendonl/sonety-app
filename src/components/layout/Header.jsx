@@ -1,25 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../assets/images/white_logo.png'
-import { MdSettings, MdLogout, MdMenu, MdExpandMore } from 'react-icons/md';
+import { MdSettings, MdLogout, MdMenu } from 'react-icons/md';
 
-function GroupAvatar({ group }) {
-  if (group?.imageUrl) {
-    return <img src={group.imageUrl} alt={group.name} className="h-full w-full object-cover" />;
-  }
-  const initials = group?.name?.split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase() || '??';
-  return (
-    <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-700">
-      <span className="font-bold text-sm text-white">{initials}</span>
-    </div>
-  );
-}
 
 export default function Header({ setSidebarOpen, user=null, currentGroup, userGroups = [] }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [groupDropdownOpen, setGroupDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const groupDropdownRef = useRef(null);
 
   // Efecto para cerrar el dropdown si se hace clic fuera de él
   useEffect(() => {
