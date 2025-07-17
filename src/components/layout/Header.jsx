@@ -47,38 +47,6 @@ export default function Header({ setSidebarOpen, user=null, currentGroup, userGr
         </div>
       </div>
 
-      {/* LADO DERECHO: Selector de Grupo y Menú de Usuario */}
-      <div className="flex items-center gap-4">
-        {/* --- Selector de Grupo --- */}
-        <div className="relative" ref={groupDropdownRef}>
-          <button onClick={() => setGroupDropdownOpen(!groupDropdownOpen)} className="flex items-center gap-2 p-2 rounded-md hover:bg-gray-700">
-            <div className="w-8 h-8 rounded-full overflow-hidden">
-              <GroupAvatar group={currentGroup} />
-            </div>
-            <span className="hidden font-semibold sm:inline">{currentGroup?.name || 'Seleccionar Grupo'}</span>
-            <MdExpandMore size={20} className="hidden sm:inline" />
-          </button>
-          
-          {groupDropdownOpen && (
-            <div className="absolute right-0 w-56 mt-2 origin-top-right bg-gray-700 rounded-md shadow-lg z-50">
-              <div className="p-2">
-                {userGroups.map((group) => (
-                  <Link
-                    key={group.id}
-                    to={`/groups/${group.id}/songs`} // Ajusta esta ruta según tu app
-                    className="flex items-center w-full gap-3 px-3 py-2 text-sm text-gray-200 rounded-md hover:bg-gray-600"
-                    onClick={() => setGroupDropdownOpen(false)}
-                  >
-                    <div className="w-8 h-8 rounded-full overflow-hidden">
-                      <GroupAvatar group={group} />
-                    </div>
-                    <span>{group.name}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
 
       {/* Menú de Usuario */}
       <div className="relative" ref={dropdownRef}>
@@ -122,7 +90,7 @@ export default function Header({ setSidebarOpen, user=null, currentGroup, userGr
           </div>
         )}
       </div>
-      </div>
+     
     </header>
   );
 }
