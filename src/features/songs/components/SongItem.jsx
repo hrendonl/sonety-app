@@ -1,7 +1,6 @@
-// src/components/songs/SongItem.jsx
-
 import { Link } from 'react-router-dom';
 import { MdPlayArrow, MdArticle, MdDelete} from 'react-icons/md';
+import { getImageYoutube } from '../../../utils/getImageYoutube';
 
 // --- Helper para formatear la duración ---
 const formatDuration = (seconds) => {
@@ -33,14 +32,14 @@ export default function SongItem({ song }) {
     <div className="flex flex-col gap-4 rounded-lg bg-gray-800 hover:bg-[#384456] p-3 sm:flex-row sm:items-center sm:justify-between sm:p-4">
       {/* Sección Principal: Imagen y Título */}
       <div className="flex flex-grow items-center gap-4">
-        {song.imageUrl ? (
-          <img src={song.imageUrl} alt={song.title} className="h-12 w-12 rounded-md object-cover sm:h-14 sm:w-14" />
+        {song.url_youtube != "" ? (
+          <img src={getImageYoutube(song.url_youtube)} alt={song.title} className="h-12 w-12 rounded-md object-cover sm:h-14 sm:w-14" />
         ) : (
           <SongPlaceholder />
         )}
         <div className="flex-grow">
           <p className="font-bold text-white">{song.title}</p>
-          <p className="text-sm text-gray-400">{song.artist}</p>
+          <p className="text-sm text-gray-400">{song.artist.name}</p>
         </div>
       </div>
 
@@ -50,7 +49,7 @@ export default function SongItem({ song }) {
         <div className="hidden items-center gap-4 text-center md:flex">
           <div>
             <p className="text-xs text-gray-300">Tono</p>
-            <p className="font-semibold text-white">{song.key}</p>
+            <p className="font-semibold text-white">{song.tone}</p>
           </div>
           <div>
             <p className="text-xs text-gray-300">Tempo</p>
@@ -59,7 +58,7 @@ export default function SongItem({ song }) {
           {/* ✨ AQUÍ ESTÁ EL CAMBIO ✨ */}
           <div>
             <p className="text-xs text-gray-300">Duración</p>
-            <p className="font-semibold text-white">{formatDuration(song.duration)}</p>
+            <p className="font-semibold text-white">{song.duration}</p>
           </div>
         </div>
 

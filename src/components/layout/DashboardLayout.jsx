@@ -9,7 +9,7 @@ export default function DashboardLayout() {
   const user = {
     name: "Camilo Henao",
     email: "...",
-    // imageUrl: "https://via.placeholder.com/40",
+    imageUrl: "https://lh3.googleusercontent.com/ogw/AF2bZygAxkogHXHiZzc8ErjZeZFmjAOd2SWv1we4dZhvCySRBQ=s32-c-mo",
   };
   const currentGroup = {
     id: "pacto-cartagena",
