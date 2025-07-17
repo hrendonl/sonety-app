@@ -1,12 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LoginForm } from "../components/LoginForm";
 import Alert from "../../../components/ui/Alert";
 import { useLogin } from "../hooks/useLogin";
+import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../../context/AppProvider";
 
 export default function LoginPage() {
+  const {token } = useContext(AppContext)
   const { login, isLoading, alertMessage } = useLogin();
 
+  const navigate = useNavigate()
+
   useEffect(() => {
+    if (token) navigate('/groups/pacto-cartagena/songs')
     document.title = 'Iniciar Sesión - Sonety';
   }, []);
 

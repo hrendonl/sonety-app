@@ -1,11 +1,25 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../assets/images/white_logo.png'
-import { MdSettings, MdLogout, MdMenu } from 'react-icons/md';
+import { MdSettings, MdLogout, MdMenu, MdExpandMore } from 'react-icons/md';
 
-export default function Header({ setSidebarOpen, user=null }) {
+function GroupAvatar({ group }) {
+  if (group?.imageUrl) {
+    return <img src={group.imageUrl} alt={group.name} className="h-full w-full object-cover" />;
+  }
+  const initials = group?.name?.split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase() || '??';
+  return (
+    <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-700">
+      <span className="font-bold text-sm text-white">{initials}</span>
+    </div>
+  );
+}
+
+export default function Header({ setSidebarOpen, user=null, currentGroup, userGroups = [] }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [groupDropdownOpen, setGroupDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const groupDropdownRef = useRef(null);
 
   // Efecto para cerrar el dropdown si se hace clic fuera de él
   useEffect(() => {
@@ -32,6 +46,39 @@ export default function Header({ setSidebarOpen, user=null }) {
             <img className='h-8 lg:h-9' src={Logo} alt="" />
         </div>
       </div>
+
+      {/* LADO DERECHO: Selector de Grupo y Menú de Usuario */}
+      <div className="flex items-center gap-4">
+        {/* --- Selector de Grupo --- */}
+        <div className="relative" ref={groupDropdownRef}>
+          <button onClick={() => setGroupDropdownOpen(!groupDropdownOpen)} className="flex items-center gap-2 p-2 rounded-md hover:bg-gray-700">
+            <div className="w-8 h-8 rounded-full overflow-hidden">
+              <GroupAvatar group={currentGroup} />
+            </div>
+            <span className="hidden font-semibold sm:inline">{currentGroup?.name || 'Seleccionar Grupo'}</span>
+            <MdExpandMore size={20} className="hidden sm:inline" />
+          </button>
+          
+          {groupDropdownOpen && (
+            <div className="absolute right-0 w-56 mt-2 origin-top-right bg-gray-700 rounded-md shadow-lg z-50">
+              <div className="p-2">
+                {userGroups.map((group) => (
+                  <Link
+                    key={group.id}
+                    to={`/groups/${group.id}/songs`} // Ajusta esta ruta según tu app
+                    className="flex items-center w-full gap-3 px-3 py-2 text-sm text-gray-200 rounded-md hover:bg-gray-600"
+                    onClick={() => setGroupDropdownOpen(false)}
+                  >
+                    <div className="w-8 h-8 rounded-full overflow-hidden">
+                      <GroupAvatar group={group} />
+                    </div>
+                    <span>{group.name}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
 
       {/* Menú de Usuario */}
       <div className="relative" ref={dropdownRef}>
@@ -75,6 +122,11 @@ export default function Header({ setSidebarOpen, user=null }) {
           </div>
         )}
       </div>
+      </div>
     </header>
   );
 }
+
+
+
+

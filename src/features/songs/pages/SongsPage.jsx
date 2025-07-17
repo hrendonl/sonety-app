@@ -13,6 +13,7 @@ const allSongs = Array.from({ length: 25 }, (_, i) => ({
   key: 'G',
   tempo: 120 + (i % 10),
   duration: 180 + i * 5, // Duración en segundos (ej. 3:00, 3:05, etc.)
+  // imageUrl: 'https://i.ytimg.com/vi/C4DqvUby9B0/mqdefault.jpg'
 }));
 
 const fetchSongs = async (page = 1, limit = 5) => {
