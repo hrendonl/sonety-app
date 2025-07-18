@@ -45,6 +45,7 @@ export default function SongsPage() {
 
   const handleSearch = async (query) => {
     setSearchTerm(query);
+    setCurrentPage(1)
     await refetch();
   };
 
