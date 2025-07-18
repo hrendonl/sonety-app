@@ -7,6 +7,8 @@ const initialState = {
   user: JSON.parse(localStorage.getItem("user")),
   token: JSON.parse(localStorage.getItem("access_token")),
   group_selected: JSON.parse(localStorage.getItem("group_selected")),
+  isPlaying: false,
+  currentSong: null,
 };
 
 const reducer = (state, action) => {
@@ -20,6 +22,10 @@ const reducer = (state, action) => {
     case "SET_GROUP_SELECTED":
       localStorage.setItem("group_selected", JSON.stringify(action.data));
       return { ...state, group_selected: action.data };
+    case "SET_IS_PLAYING":
+      return { ...state, isPlaying: action.data };
+    case "SET_CURRENT_SONG":
+      return { ...state, currentSong: action.data };
     default:
       return { ...state };
   }
@@ -27,7 +33,26 @@ const reducer = (state, action) => {
 
 const logout = () => {
   localStorage.clear();
-}
+};
+
+// Función para empezar a reproducir una canción
+const playSong = (song) => {
+  setApp("SET_CURRENT_SONG", song);
+  setApp("SET_IS_PLAYING", true);
+};
+
+// Función para pausar o reanudar
+const togglePlay = () => {
+  if (currentSong) {
+    setApp("SET_IS_PLAYING", !isPlaying);
+  }
+};
+
+// Función para cerrar el reproductor
+const closePlayer = () => {
+  setApp("SET_CURRENT_SONG", null);
+  setApp("SET_IS_PLAYING", false);
+};
 
 const AppProvider = ({ children }) => {
   const [state, setReducer] = useReducer(reducer, initialState);
@@ -36,11 +61,13 @@ const AppProvider = ({ children }) => {
     setReducer({ type: type, data });
   };
 
- 
   const value = {
     ...state,
     setApp,
-    logout
+    logout,
+    playSong,
+    togglePlay,
+    closePlayer
   };
 
   return <Provider value={value}>{children}</Provider>;
