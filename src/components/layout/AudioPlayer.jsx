@@ -112,48 +112,71 @@ export default function AudioPlayer() {
     : 0;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 shadow-lg flex items-center justify-between z-50">
-      <div className="flex items-center gap-4">
-        <img
-          src={getImageYoutube(currentSong.url_youtube)}
-          alt={currentSong.title}
-          className="w-14 h-14 rounded-md object-cover"
-        />
-        <div>
-          <p className="font-bold">{currentSong.title}</p>
-          <p className="text-sm text-gray-400">{currentSong.artist.name}</p>
+    <div className="fixed bottom-0 left-0 right-0 z-50 flex flex-col bg-gray-800 p-3 text-white shadow-lg lg:flex-row lg:items-center lg:p-4">
+      
+      {/* --- Sección Izquierda y Derecha (Móvil) / Izquierda (Desktop) --- */}
+      <div className="flex w-full items-center justify-between lg:w-1/3">
+        {/* Info de la Canción */}
+        <div className="flex flex-grow items-center gap-4 overflow-hidden">
+          <img
+            src={getImageYoutube(currentSong.url_youtube)}
+            alt={currentSong.title}
+            className="h-14 w-14 flex-shrink-0 rounded-md object-cover"
+          />
+          <div className="min-w-0 flex-1">
+            <p className="truncate font-bold">{currentSong.title}</p>
+            <p className="truncate text-sm text-gray-400">{currentSong.artist.name}</p>
+          </div>
+        </div>
+
+        {/* Controles para Móvil (Play/Pause y Cerrar) */}
+        <div className="flex flex-shrink-0 items-center gap-2 lg:hidden">
+          <button onClick={togglePlay} className="rounded-full bg-blue-600 p-2 hover:bg-blue-700">
+            {isPlaying ? <MdPause size={28} /> : <MdPlayArrow size={28} />}
+          </button>
+          <button onClick={closePlayer} className="text-gray-400 hover:text-white">
+            <MdClose size={24} />
+          </button>
         </div>
       </div>
 
-       <div className="flex w-1/2 flex-col items-center gap-2">
-        <button onClick={togglePlay} className="rounded-full bg-blue-600 p-2 hover:bg-blue-700">
-          {isPlaying ? <MdPause size={28} /> : <MdPlayArrow size={28} />}
-        </button>
+      {/* --- Sección Central (Desktop) / Inferior (Móvil) --- */}
+      <div className="mt-3 flex w-full flex-col items-center gap-2 lg:mt-0 lg:w-1/3">
+        {/* Botón de Play/Pause (Solo para Desktop) */}
+        <div className="hidden lg:flex">
+          <button onClick={togglePlay} className="rounded-full bg-blue-600 p-2 hover:bg-blue-700">
+            {isPlaying ? <MdPause size={28} /> : <MdPlayArrow size={28} />}
+          </button>
+        </div>
+        
+        {/* Barra de Tiempo */}
         <div className="flex w-full items-center gap-2">
-          <span className="w-10 text-xs text-gray-400">{formatDuration(progress.playedSeconds)}</span>
+          <span className="hidden w-10 text-xs text-gray-400 sm:inline">
+            {formatDuration(progress.playedSeconds)}
+          </span>
           <input
             type="range"
             min={0}
             max={totalDurationInSeconds}
             step="any"
             value={progress.playedSeconds}
-            // onMouseDown={handleSeekMouseDown}
             onChange={handleSeekChange}
-            // onMouseUp={handleSeekMouseUp}
-            className="w-full h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer range-sm"
-            style={{
-              background: `linear-gradient(to right, #0d73ec 0%, #0d73ec ${percentage}%, #4b5563 ${percentage}%, #4b5563 100%)`,
-            }}
+            className="h-1 w-full cursor-pointer appearance-none rounded-lg bg-gray-600"
+            style={{ background: `linear-gradient(to right, #0d73ec ${percentage}%, #4b5563 ${percentage}%)` }}
           />
-          <span className="w-10 text-xs text-gray-400">{currentSong.duration}</span>
+          <span className="hidden w-10 text-xs text-gray-400 sm:inline">
+            {currentSong.duration}
+          </span>
         </div>
       </div>
 
-      <div className="flex w-1/4 justify-end">
+      {/* --- Sección Derecha (Solo para Desktop) --- */}
+      <div className="hidden w-1/3 justify-end lg:flex">
         <button onClick={closePlayer} className="text-gray-400 hover:text-white">
           <MdClose size={24} />
         </button>
       </div>
+
 
       {/* El reproductor de YouTube está oculto pero activo */}
       <div className="absolute top-[-9999px] left-[-9999px]">
