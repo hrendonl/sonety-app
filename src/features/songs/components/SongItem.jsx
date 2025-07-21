@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
-import { MdPlayArrow, MdArticle, MdDelete} from 'react-icons/md';
+import { MdPlayArrow, MdArticle, MdDelete, MdPause} from 'react-icons/md';
 import { getImageYoutube } from '../../../utils/getImageYoutube';
+import { useContext } from 'react';
+import { AppContext } from '../../../context/AppProvider';
 
 // --- Helper para formatear la duración ---
 const formatDuration = (seconds) => {
@@ -21,7 +23,16 @@ function SongPlaceholder() {
 }
 
 export default function SongItem({ song }) {
-  const handlePlay = () => console.log(`Reproduciendo ${song.title}`);
+  const { playSong, isPlaying, currentSong, togglePlay} = useContext(AppContext)
+  const handlePlay = () => {
+    playSong(song);
+  };
+
+  const handleToggle = () => {
+    togglePlay()
+  }
+
+
   const handleDelete = () => {
     if (window.confirm(`¿Borrar "${song.title}"?`)) {
       console.log(`Borrando canción con id ${song.id}`);
@@ -64,8 +75,8 @@ export default function SongItem({ song }) {
 
         {/* Botones de Acción */}
         <div className="flex items-center gap-1 text-gray-300 sm:gap-2">
-          <button onClick={handlePlay} className="rounded-full p-2 hover:bg-gray-600 hover:text-white" title="Reproducir">
-            <MdPlayArrow size={24} />
+          <button onClick={isPlaying ? handleToggle : handlePlay} className="rounded-full p-2 hover:bg-gray-600 hover:text-white" title="Reproducir">
+            {isPlaying && song.id == currentSong.id ? <MdPause size={24} /> : <MdPlayArrow size={24} />}
           </button>
           <Link to={`/songs/${song.id}/lyrics`} className="rounded-full p-2 hover:bg-gray-600 hover:text-white" title="Ver Letra">
             <MdArticle size={22} />

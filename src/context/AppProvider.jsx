@@ -31,7 +31,15 @@ const reducer = (state, action) => {
   }
 };
 
-const logout = () => {
+
+const AppProvider = ({ children }) => {
+  const [state, setReducer] = useReducer(reducer, initialState);
+
+  const setApp = (type, data) => {
+    setReducer({ type: type, data });
+  };
+
+  const logout = () => {
   localStorage.clear();
 };
 
@@ -43,8 +51,8 @@ const playSong = (song) => {
 
 // Función para pausar o reanudar
 const togglePlay = () => {
-  if (currentSong) {
-    setApp("SET_IS_PLAYING", !isPlaying);
+  if (state.currentSong) {
+    setApp("SET_IS_PLAYING", !state.isPlaying);
   }
 };
 
@@ -53,13 +61,6 @@ const closePlayer = () => {
   setApp("SET_CURRENT_SONG", null);
   setApp("SET_IS_PLAYING", false);
 };
-
-const AppProvider = ({ children }) => {
-  const [state, setReducer] = useReducer(reducer, initialState);
-
-  const setApp = (type, data) => {
-    setReducer({ type: type, data });
-  };
 
   const value = {
     ...state,
