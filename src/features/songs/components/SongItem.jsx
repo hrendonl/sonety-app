@@ -40,7 +40,7 @@ export default function SongItem({ song }) {
   };
 
   return (
-    <div className="flex flex-col gap-4 rounded-lg bg-gray-800 hover:bg-[#384456] p-3 sm:flex-row sm:items-center sm:justify-between sm:p-4">
+    <div className={`flex flex-col gap-4 rounded-lg ${isPlaying && song.id == currentSong.id ? 'bg-[#384456]' : 'bg-gray-800'}  hover:bg-[#384456] p-3 sm:flex-row sm:items-center sm:justify-between sm:p-4`}>
       {/* Sección Principal: Imagen y Título */}
       <div className="flex flex-grow items-center gap-4">
         {song.url_youtube != "" ? (
@@ -49,7 +49,7 @@ export default function SongItem({ song }) {
           <SongPlaceholder />
         )}
         <div className="flex-grow">
-          <p className="font-bold text-white">{song.title}</p>
+          <p className={`${isPlaying && song.id == currentSong.id ? "text-blue-400" : "text-white"} font-bold`}>{song.title}</p>
           <p className="text-sm text-gray-400">{song.artist.name}</p>
         </div>
       </div>
