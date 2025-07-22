@@ -67,7 +67,7 @@ export default function SongsPage() {
         />
         <Link
           to="/songs/new"
-          className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 font-semibold transition-colors"
+          className="flex items-center justify-center gap-2 hover:bg-green-600 bg-green-700 rounded-lg px-4 py-2 font-semibold transition-colors"
         >
           <MdAdd size={22} />
           <span className="hidden sm:inline">Nueva Canción</span>

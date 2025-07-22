@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { MdPlayArrow, MdArticle, MdDelete, MdPause} from 'react-icons/md';
+import { MdPlayArrow, MdArticle, MdDelete, MdPause, MdMoreVert} from 'react-icons/md';
 import { getImageYoutube } from '../../../utils/getImageYoutube';
-import { useContext } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { AppContext } from '../../../context/AppProvider';
 
 // --- Helper para formatear la duración ---
@@ -24,6 +24,21 @@ function SongPlaceholder() {
 
 export default function SongItem({ song }) {
   const { playSong, isPlaying, currentSong, togglePlay} = useContext(AppContext)
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [dropdownRef]);
+
+
   const handlePlay = () => {
     playSong(song);
   };
@@ -39,44 +54,40 @@ export default function SongItem({ song }) {
     }
   };
 
+  const isCurrentlyPlaying = isPlaying && song.id === currentSong?.id;
+
+
   return (
-    <div className={`flex flex-col gap-4 rounded-lg ${isPlaying && song.id == currentSong.id ? 'bg-[#384456]' : 'bg-gray-800'}  hover:bg-[#384456] p-3 sm:flex-row sm:items-center sm:justify-between sm:p-4`}>
-      {/* Sección Principal: Imagen y Título */}
-      <div className="flex flex-grow items-center gap-4">
-        {song.url_youtube != "" ? (
-          <img src={getImageYoutube(song.url_youtube)} alt={song.title} className="h-12 w-12 rounded-md object-cover sm:h-14 sm:w-14" />
+  <div className={`flex items-center justify-between gap-4 rounded-lg p-3 sm:p-4 ${isCurrentlyPlaying ? 'bg-[#384456]' : 'bg-gray-800'} hover:bg-[#384456]`}>
+      
+      {/* --- LADO IZQUIERDO: Info de la Canción --- */}
+      <div className="flex min-w-0 flex-grow items-center gap-4">
+        {song.url_youtube ? (
+          <img src={getImageYoutube(song.url_youtube)} alt={song.title} className="h-12 w-12 flex-shrink-0 rounded-md object-cover sm:h-14 sm:w-14" />
         ) : (
           <SongPlaceholder />
         )}
-        <div className="flex-grow">
-          <p className="text-white font-bold">{song.title}</p>
-          <p className="text-sm text-gray-400">{song.artist.name}</p>
+        <div className="min-w-0 flex-grow">
+          <p className="truncate font-bold text-white">{song.title}</p>
+          <p className="truncate text-sm text-gray-400">{song.artist.name}</p>
         </div>
       </div>
-
-      {/* Detalles Adicionales y Acciones */}
-      <div className="ml-0 flex items-center justify-between gap-2 sm:ml-4 sm:justify-end sm:gap-4">
-        {/* Detalles para Desktop */}
+      
+      {/* --- LADO DERECHO: Detalles y Acciones --- */}
+      <div className="flex flex-shrink-0 items-center gap-4">
+        {/* Detalles (Visibles en Tablet y Desktop) */}
+        {/* ✨ CAMBIO AQUÍ: de 'lg:flex' a 'md:flex' ✨ */}
         <div className="hidden items-center gap-4 text-center md:flex">
-          <div>
-            <p className="text-xs text-gray-300">Tono</p>
-            <p className="font-semibold text-white">{song.tone}</p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-300">Tempo</p>
-            <p className="font-semibold text-white">{song.tempo} bpm</p>
-          </div>
-          {/* ✨ AQUÍ ESTÁ EL CAMBIO ✨ */}
-          <div>
-            <p className="text-xs text-gray-300">Duración</p>
-            <p className="font-semibold text-white">{song.duration}</p>
-          </div>
+          <div><p className="text-xs text-gray-300">Tono</p><p className="font-semibold text-white">{song.tone}</p></div>
+          <div><p className="text-xs text-gray-300">Tempo</p><p className="font-semibold text-white">{song.tempo} bpm</p></div>
+          <div><p className="text-xs text-gray-300">Duración</p><p className="font-semibold text-white">{song.duration}</p></div>
         </div>
-
-        {/* Botones de Acción */}
-        <div className="flex items-center gap-1 text-gray-300 sm:gap-2">
-          <button onClick={isPlaying ? handleToggle : handlePlay} className="rounded-full p-2 hover:bg-gray-600 hover:text-white" title="Reproducir">
-            {isPlaying && song.id == currentSong.id ? <MdPause size={24} /> : <MdPlayArrow size={24} />}
+        
+        {/* --- Acciones --- */}
+        {/* VISTA DESKTOP: Botones individuales */}
+        <div className="hidden lg:flex items-center gap-1 text-gray-300 sm:gap-2">
+          <button onClick={isCurrentlyPlaying ? handleToggle : handlePlay} className="rounded-full p-2 hover:bg-gray-600 hover:text-white" title="Reproducir/Pausar">
+            {isCurrentlyPlaying ? <MdPause size={24} /> : <MdPlayArrow size={24} />}
           </button>
           <Link to={`/songs/${song.id}/lyrics`} className="rounded-full p-2 hover:bg-gray-600 hover:text-white" title="Ver Letra">
             <MdArticle size={22} />
@@ -84,6 +95,29 @@ export default function SongItem({ song }) {
           <button onClick={handleDelete} className="rounded-full p-2 hover:bg-gray-600 hover:text-white" title="Borrar">
             <MdDelete size={22} />
           </button>
+        </div>
+
+        {/* VISTA MÓVIL Y TABLET: Menú Desplegable */}
+        <div className="relative lg:hidden" ref={dropdownRef}>
+          <button onClick={() => setDropdownOpen(!dropdownOpen)} className="rounded-full p-2 text-gray-300 hover:bg-gray-600 hover:text-white" title="Más opciones">
+            <MdMoreVert size={22} />
+          </button>
+          {dropdownOpen && (
+            <div className="absolute right-0 top-full mt-2 w-48 origin-top-right rounded-md bg-gray-700 shadow-lg z-20">
+              <div className="py-1">
+                <button onClick={isCurrentlyPlaying ? handleToggle : handlePlay} className="flex w-full items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-600">
+                  {isCurrentlyPlaying ? <MdPause className="mr-3" /> : <MdPlayArrow className="mr-3" />}
+                  {isCurrentlyPlaying ? 'Pausar' : 'Reproducir'}
+                </button>
+                <Link to={`/songs/${song.id}/lyrics`} className="flex w-full items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-600" onClick={() => setDropdownOpen(false)}>
+                  <MdArticle className="mr-3" /> Ver Letra
+                </Link>
+                <button onClick={handleDelete} className="flex w-full items-center px-4 py-2 text-sm text-red-400 hover:bg-gray-600">
+                  <MdDelete className="mr-3" /> Borrar
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
