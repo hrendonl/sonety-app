@@ -91,7 +91,7 @@ export default function SongsPage() {
       </div>
 
       {/* Listado de Canciones */}
-      <div className="space-y-3 min-h-[340px]">
+      <div className="space-y-2 min-h-[340px]">
         {isLoading && (
           <p className="text-center text-gray-400">Cargando canciones...</p>
         )}
