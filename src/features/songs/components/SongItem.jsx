@@ -49,7 +49,7 @@ export default function SongItem({ song }) {
           <SongPlaceholder />
         )}
         <div className="flex-grow">
-          <p className={`${isPlaying && song.id == currentSong.id ? "text-blue-400" : "text-white"} font-bold`}>{song.title}</p>
+          <p className="text-white font-bold">{song.title}</p>
           <p className="text-sm text-gray-400">{song.artist.name}</p>
         </div>
       </div>

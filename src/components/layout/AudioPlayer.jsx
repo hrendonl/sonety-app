@@ -1,4 +1,4 @@
-import YouTubePlayer from 'youtube-player';
+import YouTubePlayer from "youtube-player";
 import { MdPlayArrow, MdPause, MdClose } from "react-icons/md";
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { AppContext } from "../../context/AppProvider";
@@ -6,24 +6,24 @@ import { getImageYoutube } from "../../utils/getImageYoutube";
 
 // Helper para formatear el tiempo de segundos a MM:SS
 const formatDuration = (seconds) => {
-  if (isNaN(seconds)) return '0:00';
+  if (isNaN(seconds)) return "0:00";
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = Math.floor(seconds % 60);
-  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 };
 
 // 2. NUEVO Helper para convertir "mm:ss" a segundos
 const parseDurationToSeconds = (duration) => {
-  if (typeof duration !== 'string') return 0;
-  const [minutes, seconds] = duration.split(':').map(Number);
-  return (minutes * 60) + seconds;
+  if (typeof duration !== "string") return 0;
+  const [minutes, seconds] = duration.split(":").map(Number);
+  return minutes * 60 + seconds;
 };
 
 const getYoutubeVideoId = (url) => {
   if (!url) return null;
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
   const match = url.match(regExp);
-  return (match && match[2].length === 11) ? match[2] : null;
+  return match && match[2].length === 11 ? match[2] : null;
 };
 
 export default function AudioPlayer() {
@@ -39,9 +39,6 @@ export default function AudioPlayer() {
   const totalDurationInSeconds = useMemo(() => {
     return currentSong ? parseDurationToSeconds(currentSong.duration) : 0;
   }, [currentSong]);
-
-
-  
 
   useEffect(() => {
     const videoId = getYoutubeVideoId(currentSong?.url_youtube);
@@ -70,14 +67,15 @@ export default function AudioPlayer() {
         const currentTime = await player.getCurrentTime();
         setProgress({ playedSeconds: currentTime });
       }, 1000);
-      
+
       // Evento para saber cuándo termina la canción
-      player.on('stateChange', (event) => {
-        if (event.data === 0) { // 0 = 'ended'
+      player.on("stateChange", (event) => {
+        if (event.data === 0) {
+          // 0 = 'ended'
           closePlayer();
         }
       });
-      
+
       // Limpieza al desmontar o cambiar de canción
       return () => {
         clearInterval(progressInterval);
@@ -89,7 +87,9 @@ export default function AudioPlayer() {
   // 3. useEffect para controlar Play/Pause
   useEffect(() => {
     if (playerRef.current) {
-      isPlaying ? playerRef.current.playVideo() : playerRef.current.pauseVideo();
+      isPlaying
+        ? playerRef.current.playVideo()
+        : playerRef.current.pauseVideo();
     }
   }, [isPlaying]);
   // Si no hay canción seleccionada, no se muestra nada
@@ -102,18 +102,16 @@ export default function AudioPlayer() {
     }
   };
 
-
   if (!currentSong) {
     return null;
   }
 
-   const percentage = totalDurationInSeconds
+  const percentage = totalDurationInSeconds
     ? (progress.playedSeconds / totalDurationInSeconds) * 100
     : 0;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 flex flex-col bg-gray-800 p-3 text-white shadow-lg lg:flex-row lg:items-center lg:p-4">
-      
+    <div className="fixed bottom-0 left-0 right-0 z-50 flex flex-col border-t border-t-gray-700 bg-gray-900 p-3 text-white shadow-lg lg:flex-row lg:items-center lg:p-4">
       {/* --- Sección Izquierda y Derecha (Móvil) / Izquierda (Desktop) --- */}
       <div className="flex w-full items-center justify-between lg:w-1/3">
         {/* Info de la Canción */}
@@ -125,16 +123,24 @@ export default function AudioPlayer() {
           />
           <div className="min-w-0 flex-1">
             <p className="truncate font-bold">{currentSong.title}</p>
-            <p className="truncate text-sm text-gray-400">{currentSong.artist.name}</p>
+            <p className="truncate text-sm text-gray-400">
+              {currentSong.artist.name}
+            </p>
           </div>
         </div>
 
         {/* Controles para Móvil (Play/Pause y Cerrar) */}
         <div className="flex flex-shrink-0 items-center gap-2 lg:hidden">
-          <button onClick={togglePlay} className="rounded-full bg-blue-600 p-2 hover:bg-blue-700">
-            {isPlaying ? <MdPause size={28} /> : <MdPlayArrow size={28} />}
+          <button
+            onClick={togglePlay}
+            className="rounded-full bg-white p-2 text-gray-900"
+          >
+            {isPlaying ? <MdPause size={24} /> : <MdPlayArrow size={24} />}
           </button>
-          <button onClick={closePlayer} className="text-gray-400 hover:text-white">
+          <button
+            onClick={closePlayer}
+            className="text-gray-400 hover:text-white"
+          >
             <MdClose size={24} />
           </button>
         </div>
@@ -144,11 +150,14 @@ export default function AudioPlayer() {
       <div className="mt-3 flex w-full flex-col items-center gap-2 lg:mt-0 lg:w-1/3">
         {/* Botón de Play/Pause (Solo para Desktop) */}
         <div className="hidden lg:flex">
-          <button onClick={togglePlay} className="rounded-full bg-blue-600 p-2 hover:bg-blue-700">
-            {isPlaying ? <MdPause size={28} /> : <MdPlayArrow size={28} />}
+          <button
+            onClick={togglePlay}
+            className="rounded-full bg-white p-2 text-gray-900"
+          >
+            {isPlaying ? <MdPause size={24} /> : <MdPlayArrow size={24} />}
           </button>
         </div>
-        
+
         {/* Barra de Tiempo */}
         <div className="flex w-full items-center gap-2">
           <span className="hidden w-10 text-xs text-gray-400 sm:inline">
@@ -161,8 +170,10 @@ export default function AudioPlayer() {
             step="any"
             value={progress.playedSeconds}
             onChange={handleSeekChange}
-            className="h-1 w-full cursor-pointer appearance-none rounded-lg bg-gray-600"
-            style={{ background: `linear-gradient(to right, #0d73ec ${percentage}%, #4b5563 ${percentage}%)` }}
+            className="range-thumb-blue"
+            style={{
+              background: `linear-gradient(to right, white 0%, white ${percentage}%, #4b5563 ${percentage}%, #4b5563 100%)`,
+            }}
           />
           <span className="hidden w-10 text-xs text-gray-400 sm:inline">
             {currentSong.duration}
@@ -172,11 +183,13 @@ export default function AudioPlayer() {
 
       {/* --- Sección Derecha (Solo para Desktop) --- */}
       <div className="hidden w-1/3 justify-end lg:flex">
-        <button onClick={closePlayer} className="text-gray-400 hover:text-white">
+        <button
+          onClick={closePlayer}
+          className="text-gray-400 hover:text-white"
+        >
           <MdClose size={24} />
         </button>
       </div>
-
 
       {/* El reproductor de YouTube está oculto pero activo */}
       <div className="absolute top-[-9999px] left-[-9999px]">
