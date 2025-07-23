@@ -105,11 +105,8 @@ export function LoginForm({ onSubmit, isLoading }) {
           disabled={isLoading}
           className="w-full flex justify-center py-2 font-medium text-white cursor-pointer bg-[#0d73ec] rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-gray-800 disabled:bg-blue-400"
         >
-          {isLoading ? (
-            <ImSpinner2 className="animate-spin h-5 w-5" />
-          ) : (
-            "Iniciar sesión"
-          )}
+          {isLoading && <ImSpinner2 className="animate-spin h-5 w-5 mr-2" />}
+          Iniciar sesión
         </button>
       </form>
 
