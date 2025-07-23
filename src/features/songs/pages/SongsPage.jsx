@@ -104,6 +104,14 @@ export default function SongsPage() {
         />
       </div>
 
+     {/* --- Títulos de la Lista (con Grid) --- */}
+      {data?.list.length > 0 && <div className="hidden md:grid grid-cols-[1fr_repeat(3,minmax(0,90px))_minmax(0,140px)] gap-4 items-center px-4 text-sm font-semibold text-gray-400">
+        <span className="col-start-1">Canción</span>
+        <span className="text-center col-start-2">Tono</span>
+        <span className="text-center col-start-3">Tempo</span>
+        <span className="text-center col-start-4">Duración</span>
+      </div>}
+
       {/* --- Listado de Canciones --- */}
       <div className="space-y-2 min-h-[340px]">
         {isLoading && <p className="text-center text-gray-400">Cargando...</p>}
