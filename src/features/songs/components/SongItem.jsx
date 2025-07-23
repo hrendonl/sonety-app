@@ -38,6 +38,7 @@ export default function SongItem({ song }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownRef]);
 
+  
 
   const handlePlay = () => {
     playSong(song);
@@ -47,7 +48,6 @@ export default function SongItem({ song }) {
     togglePlay()
   }
 
-
   const handleDelete = () => {
     if (window.confirm(`¿Borrar "${song.title}"?`)) {
       console.log(`Borrando canción con id ${song.id}`);
@@ -56,9 +56,18 @@ export default function SongItem({ song }) {
 
   const isCurrentlyPlaying = isPlaying && song.id === currentSong?.id;
 
+  const handelOnClick = () => {
+    setDropdownOpen(false)
+    if(isCurrentlyPlaying){
+      handleToggle()
+    }else {
+      handlePlay()
+    }
+  }
+
 
   return (
-  <div className={`flex items-center justify-between gap-4 rounded-lg p-3 sm:p-4 ${isCurrentlyPlaying ? 'bg-[#384456]' : 'bg-gray-800'} hover:bg-[#384456]`}>
+  <div className={`flex items-center justify-between gap-4 rounded-lg p-3 sm:p-4 ${song.id === currentSong?.id ? 'bg-[#384456]' : 'bg-gray-800'} hover:bg-[#384456]`}>
       
       {/* --- LADO IZQUIERDO: Info de la Canción --- */}
       <div className="flex min-w-0 flex-grow items-center gap-4">
@@ -105,14 +114,14 @@ export default function SongItem({ song }) {
           {dropdownOpen && (
             <div className="absolute right-0 top-full mt-2 w-48 origin-top-right rounded-md bg-gray-700 shadow-lg z-20">
               <div className="py-1">
-                <button onClick={isCurrentlyPlaying ? handleToggle : handlePlay} className="flex w-full items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-600">
+                <button onClick={handelOnClick} className="flex w-full items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-600">
                   {isCurrentlyPlaying ? <MdPause className="mr-3" /> : <MdPlayArrow className="mr-3" />}
                   {isCurrentlyPlaying ? 'Pausar' : 'Reproducir'}
                 </button>
                 <Link to={`/songs/${song.id}/lyrics`} className="flex w-full items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-600" onClick={() => setDropdownOpen(false)}>
                   <MdArticle className="mr-3" /> Ver Letra
                 </Link>
-                <button onClick={handleDelete} className="flex w-full items-center px-4 py-2 text-sm text-red-400 hover:bg-gray-600">
+                <button onClick={handleDelete} className="flex w-full items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-600">
                   <MdDelete className="mr-3" /> Borrar
                 </button>
               </div>
