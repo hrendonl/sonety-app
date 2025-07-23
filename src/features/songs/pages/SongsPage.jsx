@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { MdAdd, MdSearch } from "react-icons/md";
+import { MdAdd, MdSearch, MdFilterList } from "react-icons/md";
 import SongItem from "../components/SongItem";
 import PaginationControls from "../../../components/ui/PaginationControls";
 import { getSongs } from "../../../api/songApi";
@@ -58,30 +58,44 @@ export default function SongsPage() {
     <div className="text-white space-y-6">
       <h1 className="lg:text-3xl text-xl font-bold">Canciones</h1>
 
-      {/* Contenedor de Acciones: Buscador y Botón */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        <SearchBox
-          handleOnChange={handleSearch}
-          searchTerm={searchTerm}
-          placeholder="Buscar por canción o artista..."
-        />
-        <Link
-          to="/songs/new"
-          className="flex items-center justify-center gap-2 hover:bg-green-600 bg-green-700 rounded-lg px-4 py-2 font-semibold transition-colors"
+      {/* --- Barra de Búsqueda y Filtros --- */}
+      <div className="flex flex-row gap-3">
+        {/* ✨ El SearchBox ahora ocupa el espacio disponible ✨ */}
+        <div className="flex-grow">
+          <SearchBox
+            handleOnChange={handleSearch}
+            searchTerm={searchTerm}
+            placeholder="Buscar por canción o artista..."
+          />
+        </div>
+        {/* ✨ El botón de filtros mantiene su tamaño ✨ */}
+        <button
+          className="flex-shrink-0 flex items-center justify-center gap-2 bg-gray-700 hover:bg-gray-600 rounded-lg px-4 py-2 font-semibold transition-colors"
         >
-          <MdAdd size={22} />
-          <span className="hidden sm:inline">Nueva Canción</span>
-        </Link>
+          <MdFilterList size={20} />
+          <span className="hidden sm:inline">Filtros</span>
+        </button>
       </div>
 
-      <div className="flex flex-col sm:items-center gap-4 sm:flex-row sm:justify-between">
-        <div>
-          <p className="text-gray-400">
-            Total de canciones:{" "}
-            <span className="font-bold text-white">
-              {data?.pagination.total_items ?? 0}
-            </span>
-          </p>
+      {/* --- Barra de Paginación y Acciones --- */}
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+        {/* ✨ Contenedor con justify-between para separar los elementos ✨ */}
+        <div className="w-full flex items-center justify-between gap-4">
+          <Link
+            to="/songs/new"
+            className="flex-shrink-0 flex items-center justify-center gap-2 hover:bg-green-600 bg-green-700 rounded-lg px-4 py-2 text-sm font-semibold transition-colors"
+          >
+            <MdAdd size={20} />
+            <span>Nueva Canción</span>
+          </Link>
+           <div>
+            <p className="text-gray-400">
+              Total:
+              <span className="font-bold text-white pl-3">
+                {data?.pagination.total_items ?? 0}
+              </span>
+            </p>
+          </div>
         </div>
         <PaginationControls
           currentPage={currentPage}
@@ -90,16 +104,10 @@ export default function SongsPage() {
         />
       </div>
 
-      {/* Listado de Canciones */}
+      {/* --- Listado de Canciones --- */}
       <div className="space-y-2 min-h-[340px]">
-        {isLoading && (
-          <p className="text-center text-gray-400">Cargando canciones...</p>
-        )}
-        {error && (
-          <p className="text-center text-red-500">
-            Error al cargar las canciones.
-          </p>
-        )}
+        {isLoading && <p className="text-center text-gray-400">Cargando...</p>}
+        {error && <p className="text-center text-red-500">Error al cargar.</p>}
         {data?.list?.map((song) => (
           <SongItem key={song.id} song={song} />
         ))}

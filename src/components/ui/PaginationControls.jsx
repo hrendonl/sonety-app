@@ -16,7 +16,7 @@ export default function PaginationControls({ currentPage, totalPages, onPageChan
   if (!totalPages || totalPages <= 1) return null;
 
   return (
-    <div className="flex w-full items-center justify-between sm:w-auto sm:justify-center sm:gap-4">
+    <div className="flex w-full items-center justify-between sm:w-auto sm:justify-center sm:gap-4 md:w-auto flex-shrink-0">
       <button
         onClick={handlePrevious}
         disabled={currentPage === 1}
