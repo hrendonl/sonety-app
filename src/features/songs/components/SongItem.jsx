@@ -164,7 +164,7 @@ export default function SongItem({ song }) {
             <MdMoreVert size={22} />
           </button>
           {dropdownOpen && (
-            <div className="absolute right-0 top-full mt-2 w-48 origin-top-right rounded-md bg-gray-700 shadow-lg z-20">
+            <div className="absolute right-0 bottom-full mt-2 w-48  origin-bottom-right rounded-md bg-gray-700 shadow-lg z-20">
               <div className="py-1">
                 <button
                   onClick={handleMovil}
