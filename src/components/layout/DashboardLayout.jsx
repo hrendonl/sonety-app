@@ -31,7 +31,7 @@ export default function DashboardLayout() {
         userGroups={userGroups}
       />
       <Sidebar isSidebarOpen={isSidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <main className="row-start-2 col-start-2 overflow-y-auto bg-gray-900 lg:p-6 p-4 min-h-0">
+       <main className="row-start-2 col-start-2 overflow-y-auto bg-gray-900 p-4 lg:p-10 pb-32 lg:pb-32">
         <Outlet />
       </main>
       <AudioPlayer />
