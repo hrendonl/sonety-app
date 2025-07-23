@@ -118,9 +118,9 @@ export default function SongItem({ song }) {
 
       {/* Columnas 2, 3 y 4: Detalles (Tono, Tempo, Duración) */}
       <div className="hidden md:contents">
-        <p className="font-semibold text-white text-center">{song.tone}</p>
-        <p className="font-semibold text-white text-center">{song.tempo} bpm</p>
-        <p className="font-semibold text-white text-center">{song.duration}</p>
+        <p className="font-semibold text-gray-300 text-center">{song.tone}</p>
+        <p className="font-semibold text-gray-300 text-center">{song.tempo} bpm</p>
+        <p className="font-semibold text-gray-300 text-center">{song.duration}</p>
       </div>
 
       {/* Columna 5: Acciones */}
@@ -168,7 +168,7 @@ export default function SongItem({ song }) {
               <div className="py-1">
                 <button
                   onClick={handleMovil}
-                  className="flex w-full items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-600"
+                  className="flex w-full items-center px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-600"
                 >
                   {getIsCurrentlyPlaying() ? (
                     <MdPause className="mr-3" />
@@ -179,14 +179,14 @@ export default function SongItem({ song }) {
                 </button>
                 <Link
                   to={`/groups/${song.group_id}/songs/${song.id}/lyrics`}
-                  className="flex w-full items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-600"
+                  className="flex w-full items-center px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-600"
                   onClick={() => setDropdownOpen(false)}
                 >
                   <MdArticle className="mr-3" /> Ver Letra
                 </Link>
                 <button
                   onClick={handleDelete}
-                  className="flex w-full items-center px-4 py-2 text-sm text-white hover:bg-gray-600"
+                  className="flex w-full items-center px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-600"
                 >
                   <MdDelete className="mr-3" /> Borrar
                 </button>
