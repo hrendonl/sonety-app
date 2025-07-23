@@ -1,12 +1,21 @@
-import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import Logo from '../../assets/images/white_logo.png'
-import { MdSettings, MdLogout, MdMenu } from 'react-icons/md';
+import { useState, useEffect, useRef, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Logo from "../../assets/images/white_logo.png";
+import { MdSettings, MdLogout, MdMenu } from "react-icons/md";
+import { AppContext } from "../../context/AppProvider";
 
-
-export default function Header({ setSidebarOpen, user=null, currentGroup, userGroups = [] }) {
+export default function Header({
+  setSidebarOpen,
+  currentGroup,
+  userGroups = [],
+}) {
+  const { user, logout } = useContext(AppContext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  const handleLogout = async () => {
+    logout();
+  };
 
   // Efecto para cerrar el dropdown si se hace clic fuera de él
   useEffect(() => {
@@ -23,32 +32,45 @@ export default function Header({ setSidebarOpen, user=null, currentGroup, userGr
     <header className="flex items-center col-span-2 row-start-1 justify-between p-4 bg-gray-800 text-white border-b border-gray-700">
       <div className="flex items-center">
         {/* Botón Hamburguesa para móvil */}
-        <button 
+        <button
           onClick={() => setSidebarOpen(true)}
           className="mr-4 text-white lg:hidden"
         >
           <MdMenu size={24} />
         </button>
         <div className="text-xl font-bold">
-            <img className='h-8 lg:h-9' src={Logo} alt="" />
+          <img className="h-8 lg:h-9" src={Logo} alt="" />
         </div>
       </div>
 
-
       {/* Menú de Usuario */}
       <div className="relative" ref={dropdownRef}>
-        <button onClick={() => setDropdownOpen(!dropdownOpen)} className="block hover:cursor-pointer">
-          {user && user.imageUrl ? (
+        <button
+          onClick={() => setDropdownOpen(!dropdownOpen)}
+          className="block hover:cursor-pointer"
+        >
+          {user && user.image != "string" ? (
             <img
-              src={user.imageUrl}
+              src={user.image}
               alt="Avatar de usuario"
               className="lg:w-9 lg:h-9 h-8 w-8 rounded-full object-cover"
             />
           ) : (
             // SVG por defecto si no hay imagen
             <div className="lg:w-9 lg:h-9 h-8 w-8 rounded-full bg-gray-600 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
               </svg>
             </div>
           )}
@@ -57,9 +79,11 @@ export default function Header({ setSidebarOpen, user=null, currentGroup, userGr
         {dropdownOpen && (
           <div className="absolute right-0 w-48 mt-2 origin-top-right bg-gray-700 rounded-md shadow-lg z-50">
             <div className="py-1">
-              <div className='px-4 py-2 border-b border-gray-600'>
-                <p className='text-sm font-medium text-white'>Camilo Henao</p>
-                <p className='text-xs text-gray-400'>camilo@correo.com</p>
+              <div className="px-4 py-2 border-b border-gray-600">
+                <p className="text-sm font-medium text-white">
+                  {user.fullname}
+                </p>
+                <p className="text-xs text-gray-400">{user.email}</p>
               </div>
               <Link
                 to="/settings"
@@ -68,20 +92,17 @@ export default function Header({ setSidebarOpen, user=null, currentGroup, userGr
               >
                 <MdSettings className="mr-3" /> Configuración
               </Link>
-              <button
+              <Link
+                to="/"
+                onClick={handleLogout}
                 className="flex items-center w-full px-4 py-2 text-sm text-gray-300 hover:bg-gray-600"
               >
                 <MdLogout className="mr-3" /> Cerrar Sesión
-              </button>
+              </Link>
             </div>
           </div>
         )}
       </div>
-     
     </header>
   );
 }
-
-
-
-

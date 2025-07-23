@@ -6,7 +6,7 @@ export default function ProtectedRoute() {
   const { token } = useContext(AppContext);
   
   if (!token) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
 
   // Si está autenticado, permite el acceso a las rutas hijas

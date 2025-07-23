@@ -31,7 +31,6 @@ const reducer = (state, action) => {
   }
 };
 
-
 const AppProvider = ({ children }) => {
   const [state, setReducer] = useReducer(reducer, initialState);
 
@@ -40,27 +39,29 @@ const AppProvider = ({ children }) => {
   };
 
   const logout = () => {
-  localStorage.clear();
-};
+    localStorage.clear();
+    setApp("SET_USER", null)
+    setApp("SET_TOKEN", null)
+  };
 
-// Función para empezar a reproducir una canción
-const playSong = (song) => {
-  setApp("SET_CURRENT_SONG", song);
-  setApp("SET_IS_PLAYING", true);
-};
+  // Función para empezar a reproducir una canción
+  const playSong = (song) => {
+    setApp("SET_CURRENT_SONG", song);
+    setApp("SET_IS_PLAYING", true);
+  };
 
-// Función para pausar o reanudar
-const togglePlay = () => {
-  if (state.currentSong) {
-    setApp("SET_IS_PLAYING", !state.isPlaying);
-  }
-};
+  // Función para pausar o reanudar
+  const togglePlay = () => {
+    if (state.currentSong) {
+      setApp("SET_IS_PLAYING", !state.isPlaying);
+    }
+  };
 
-// Función para cerrar el reproductor
-const closePlayer = () => {
-  setApp("SET_CURRENT_SONG", null);
-  setApp("SET_IS_PLAYING", false);
-};
+  // Función para cerrar el reproductor
+  const closePlayer = () => {
+    setApp("SET_CURRENT_SONG", null);
+    setApp("SET_IS_PLAYING", false);
+  };
 
   const value = {
     ...state,
@@ -68,7 +69,7 @@ const closePlayer = () => {
     logout,
     playSong,
     togglePlay,
-    closePlayer
+    closePlayer,
   };
 
   return <Provider value={value}>{children}</Provider>;
