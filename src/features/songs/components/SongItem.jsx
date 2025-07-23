@@ -124,7 +124,7 @@ export default function SongItem({ song }) {
             <MdMoreVert size={22} />
           </button>
           {dropdownOpen && (
-            <div className="absolute right-0 top-full mt-2 w-48 origin-top-right rounded-md bg-gray-700 shadow-lg z-20">
+            <div className="absolute right-0 bottom-full mt-2 w-48 origin-bottom-right rounded-md bg-gray-700 shadow-lg z-20">
               <div className="py-1">
                 <button onClick={handleMovil} className="flex w-full items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-600">
                   {getIsCurrentlyPlaying() ? <MdPause className="mr-3" /> : <MdPlayArrow className="mr-3" />}
