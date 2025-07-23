@@ -23,7 +23,7 @@ function SongPlaceholder() {
 }
 
 export default function SongItem({ song }) {
-  const { playSong, isPlaying, currentSong, togglePlay} = useContext(AppContext)
+  const { playSong, isPlaying, currentSong, togglePlay, setApp} = useContext(AppContext)
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -54,11 +54,23 @@ export default function SongItem({ song }) {
     }
   };
 
-  const isCurrentlyPlaying = isPlaying && song.id === currentSong?.id;
+  const getIsCurrentlyPlaying =()=> {
+    return isPlaying && song.id === currentSong?.id;
+  }
 
-  const handelOnClick = () => {
+  const handleMovil = async () => {
     setDropdownOpen(false)
-    if(isCurrentlyPlaying){
+    await setApp("SET_IS_PLAYING", false)
+    if(getIsCurrentlyPlaying()){
+      handleToggle()
+    }else {
+      handlePlay()
+    }
+  }
+
+  const handleDesktop = async () => {
+    await setApp("SET_IS_PLAYING", false)
+    if(getIsCurrentlyPlaying()){
       handleToggle()
     }else {
       handlePlay()
@@ -95,8 +107,8 @@ export default function SongItem({ song }) {
         {/* --- Acciones --- */}
         {/* VISTA DESKTOP: Botones individuales */}
         <div className="hidden lg:flex items-center gap-1 text-gray-300 sm:gap-2">
-          <button onClick={isCurrentlyPlaying ? handleToggle : handlePlay} className="rounded-full p-2 hover:bg-gray-600 hover:text-white" title="Reproducir/Pausar">
-            {isCurrentlyPlaying ? <MdPause size={24} /> : <MdPlayArrow size={24} />}
+          <button onClick={handleDesktop} className="rounded-full p-2 hover:bg-gray-600 hover:text-white" title="Reproducir/Pausar">
+            {getIsCurrentlyPlaying() ? <MdPause size={24} /> : <MdPlayArrow size={24} />}
           </button>
           <Link to={`/songs/${song.id}/lyrics`} className="rounded-full p-2 hover:bg-gray-600 hover:text-white" title="Ver Letra">
             <MdArticle size={22} />
@@ -114,9 +126,9 @@ export default function SongItem({ song }) {
           {dropdownOpen && (
             <div className="absolute right-0 top-full mt-2 w-48 origin-top-right rounded-md bg-gray-700 shadow-lg z-20">
               <div className="py-1">
-                <button onClick={handelOnClick} className="flex w-full items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-600">
-                  {isCurrentlyPlaying ? <MdPause className="mr-3" /> : <MdPlayArrow className="mr-3" />}
-                  {isCurrentlyPlaying ? 'Pausar' : 'Reproducir'}
+                <button onClick={handleMovil} className="flex w-full items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-600">
+                  {getIsCurrentlyPlaying() ? <MdPause className="mr-3" /> : <MdPlayArrow className="mr-3" />}
+                  {getIsCurrentlyPlaying() ? 'Pausar' : 'Reproducir'}
                 </button>
                 <Link to={`/songs/${song.id}/lyrics`} className="flex w-full items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-600" onClick={() => setDropdownOpen(false)}>
                   <MdArticle className="mr-3" /> Ver Letra
