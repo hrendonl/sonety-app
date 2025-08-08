@@ -1,40 +1,28 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import Header from "./Header";
 import AudioPlayer from "./AudioPlayer";
 
 export default function DashboardLayout() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
-  const user = {
-    name: "Camilo Henao",
-    email: "...",
-    imageUrl: "https://lh3.googleusercontent.com/ogw/AF2bZygAxkogHXHiZzc8ErjZeZFmjAOd2SWv1we4dZhvCySRBQ=s32-c-mo",
-  };
-  const currentGroup = {
-    id: "pacto-cartagena",
-    name: "Pacto Cartagena",
-    imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzGQ2ZpdORlAn30CHcKeLewdnluzQZm5wrDQ&s",
-  };
-  const userGroups = [
-    { id: "pacto-cartagena", name: "Pacto Cartagena", imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzGQ2ZpdORlAn30CHcKeLewdnluzQZm5wrDQ&s" },
-    { id: "generacion-12", name: "Generación 12" },
-  ];
-
   return (
-    <div className="grid h-screen grid-rows-[auto_1fr] grid-cols-[auto_1fr] min-h-0">
-      <Header
-        setSidebarOpen={setSidebarOpen}
-        user={user}
-        currentGroup={currentGroup}
-        userGroups={userGroups}
-      />
-      <Sidebar isSidebarOpen={isSidebarOpen} setSidebarOpen={setSidebarOpen} />
-       <main className="row-start-2 col-start-2 overflow-y-auto bg-gray-900 p-4 lg:p-10 pb-32 lg:pb-32">
-        <Outlet />
-      </main>
+    <>
+      <div className="flex h-screen bg-gray-900">
+        {/* El Sidebar se encarga de su propia visibilidad y posicionamiento */}
+        <Sidebar
+          isSidebarOpen={isSidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+        />
+
+        {/* El contenido principal ahora crece para ocupar el espacio restante */}
+        <main className="flex-1 overflow-y-auto p-4 pb-32 lg:p-6 lg:pb-24">
+          <Outlet />
+        </main>
+      </div>
+
+      {/* El Player se mantiene fijo en la parte inferior */}
       <AudioPlayer />
-    </div>
+    </>
   );
 }
