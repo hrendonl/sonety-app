@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { MdAdd, MdSearch, MdFilterList } from "react-icons/md";
-import SongItem from "../components/SongItem";
 import PaginationControls from "../../../components/ui/PaginationControls";
 import { getSongs } from "../../../api/songApi";
 import SearchBox from "../../../components/ui/SearchBox";
+import SongList from "../components/SongList";
 
 // --- Mock de datos y función de fetch (reemplaza con tu llamada a la API real) ---
 // const allSongs = Array.from({ length: 25 }, (_, i) => ({
@@ -34,7 +34,8 @@ import SearchBox from "../../../components/ui/SearchBox";
 export default function SongsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [groupId, setGroupId] = useState("685f512194e837da8958687e");
+  const [groupId, setGroupId] = useState("1");
+  
 
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["songs", currentPage, searchTerm],
@@ -104,22 +105,7 @@ export default function SongsPage() {
         />
       </div>
 
-     {/* --- Títulos de la Lista (con Grid) --- */}
-      {data?.list.length > 0 && <div className="hidden md:grid grid-cols-[1fr_repeat(3,minmax(0,90px))_minmax(0,140px)] gap-4 items-center px-4 text-sm font-semibold text-gray-400">
-        <span className="col-start-1">Canción</span>
-        <span className="text-center col-start-2">Tono</span>
-        <span className="text-center col-start-3">Tempo</span>
-        <span className="text-center col-start-4">Duración</span>
-      </div>}
-
-      {/* --- Listado de Canciones --- */}
-      <div className="space-y-2 min-h-[340px]">
-        {isLoading && <p className="text-center text-gray-400">Cargando...</p>}
-        {error && <p className="text-center text-red-500">Error al cargar.</p>}
-        {data?.list?.map((song) => (
-          <SongItem key={song.id} song={song} />
-        ))}
-      </div>
+      <SongList songs={data?.list} isLoading={isLoading} error={error} refetch={refetch}/>
     </div>
   );
 }

@@ -9,6 +9,7 @@ import {
 import { getImageYoutube } from "../../../utils/getImageYoutube";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AppContext } from "../../../context/AppProvider";
+import { deleteSong } from "../../../api/songApi";
 
 // --- Helper para formatear la duración ---
 const formatDuration = (seconds) => {
@@ -39,7 +40,7 @@ function SongPlaceholder() {
   );
 }
 
-export default function SongItem({ song }) {
+export default function SongItem({ song, refetch }) {
   const { playSong, isPlaying, currentSong, togglePlay, setApp } =
     useContext(AppContext);
 
@@ -64,9 +65,10 @@ export default function SongItem({ song }) {
     togglePlay();
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (window.confirm(`¿Borrar "${song.title}"?`)) {
-      console.log(`Borrando canción con id ${song.id}`);
+      await deleteSong(song.id);
+      await refetch()
     }
   };
 
@@ -101,9 +103,9 @@ export default function SongItem({ song }) {
     >
       {/* Columna 1: Info de la Canción */}
       <div className="flex min-w-0 flex-grow items-center gap-4">
-        {song.url_youtube ? (
+        {song.youtube_url ? (
           <img
-            src={getImageYoutube(song.url_youtube)}
+            src={getImageYoutube(song.youtube_url)}
             alt={song.title}
             className="h-12 w-12 shrink-0 rounded-md object-cover sm:h-14 sm:w-14"
           />
@@ -118,8 +120,8 @@ export default function SongItem({ song }) {
 
       {/* Columnas 2, 3 y 4: Detalles (Tono, Tempo, Duración) */}
       <div className="hidden md:contents">
-        <p className="font-semibold text-gray-300 text-center">{song.tone}</p>
-        <p className="font-semibold text-gray-300 text-center">{song.tempo} bpm</p>
+        <p className="font-semibold text-gray-300 text-center">{song.key_chord}</p>
+        <p className="font-semibold text-gray-300 text-center">{song.tempo_BPM} bpm</p>
         <p className="font-semibold text-gray-300 text-center">{song.duration}</p>
       </div>
 

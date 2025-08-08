@@ -20,9 +20,11 @@ const parseDurationToSeconds = (duration) => {
 };
 
 const getYoutubeVideoId = (url) => {
+  console.log(url)
   if (!url) return null;
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
   const match = url.match(regExp);
+  console.log(match[2])
   return match && match[2].length === 11 ? match[2] : null;
 };
 
@@ -41,7 +43,7 @@ export default function AudioPlayer() {
   }, [currentSong]);
 
   useEffect(() => {
-    const videoId = getYoutubeVideoId(currentSong?.url_youtube);
+    const videoId = getYoutubeVideoId(currentSong?.youtube_url);
 
     if (videoId && playerContainerRef.current) {
       // Si ya existe un reproductor, lo destruimos
@@ -82,7 +84,7 @@ export default function AudioPlayer() {
         player.destroy();
       };
     }
-  }, [currentSong?.url_youtube]);
+  }, [currentSong?.youtube_url]);
 
   // 3. useEffect para controlar Play/Pause
   useEffect(() => {
@@ -117,7 +119,7 @@ export default function AudioPlayer() {
         {/* Info de la Canción */}
         <div className="flex flex-grow items-center gap-4 overflow-hidden">
           <img
-            src={getImageYoutube(currentSong.url_youtube)}
+            src={getImageYoutube(currentSong.youtube_url)}
             alt={currentSong.title}
             className="h-14 w-14 flex-shrink-0 rounded-md object-cover"
           />
