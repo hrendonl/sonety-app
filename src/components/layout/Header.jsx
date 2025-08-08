@@ -29,7 +29,7 @@ export default function Header({
   }, [dropdownRef]);
 
   return (
-    <header className="flex items-center col-span-2 row-start-1 justify-between p-4 bg-gray-800 text-white border-b border-gray-700">
+    <header className="flex items-center col-span-2 row-start-1 justify-between bg-transparent text-white">
       <div className="flex items-center">
         {/* Botón Hamburguesa para móvil */}
         <button
@@ -38,9 +38,7 @@ export default function Header({
         >
           <MdMenu size={24} />
         </button>
-        <div className="text-xl font-bold">
-          <img className="h-8 lg:h-9" src={Logo} alt="" />
-        </div>
+        <h1 className="lg:text-3xl text-2xl font-bold">Canciones</h1>
       </div>
 
       {/* Menú de Usuario */}

@@ -57,7 +57,6 @@ export default function SongsPage() {
 
   return (
     <div className="text-white space-y-6">
-      <h1 className="lg:text-3xl text-2xl font-bold">Canciones</h1>
 
       {/* --- Barra de Búsqueda y Filtros --- */}
       <div className="flex flex-row gap-3">

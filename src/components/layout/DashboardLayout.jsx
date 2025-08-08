@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import AudioPlayer from "./AudioPlayer";
+import Header from "./Header"
 
 export default function DashboardLayout() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -16,7 +17,8 @@ export default function DashboardLayout() {
         />
 
         {/* El contenido principal ahora crece para ocupar el espacio restante */}
-        <main className="flex-1 overflow-y-auto p-4 pb-32 lg:p-6 lg:pb-24">
+        <main className="flex-1 overflow-y-auto p-4 pb-32 lg:pl-10 lg:pr-10 lg:pb-24 space-y-8">
+          <Header />
           <Outlet />
         </main>
       </div>
