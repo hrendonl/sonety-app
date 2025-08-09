@@ -6,13 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../../context/AppProvider";
 
 export default function LoginPage() {
-  const {token } = useContext(AppContext)
+  const {token, groupSelected } = useContext(AppContext)
   const { login, isLoading, alertMessage } = useLogin();
 
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (token) navigate('/groups/pacto-cartagena/songs')
+    if (token) navigate(`/groups/${groupSelected.name.replaceAll(" ", "-")}/songs`)
     document.title = 'Iniciar Sesión - Sonety';
   }, []);
 

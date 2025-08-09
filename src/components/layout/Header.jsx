@@ -38,7 +38,7 @@ export default function Header({
         >
           <MdMenu size={24} />
         </button>
-        <h1 className="lg:text-3xl text-2xl font-bold">Canciones</h1>
+        <h1 className="lg:text-2xl text-2xl font-bold">Canciones</h1>
       </div>
 
       {/* Menú de Usuario */}

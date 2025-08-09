@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { MdAdd, MdSearch, MdFilterList } from "react-icons/md";
@@ -6,6 +6,7 @@ import PaginationControls from "../../../components/ui/PaginationControls";
 import { getSongs } from "../../../api/songApi";
 import SearchBox from "../../../components/ui/SearchBox";
 import SongList from "../components/SongList";
+import { AppContext } from "../../../context/AppProvider";
 
 // --- Mock de datos y función de fetch (reemplaza con tu llamada a la API real) ---
 // const allSongs = Array.from({ length: 25 }, (_, i) => ({
@@ -34,13 +35,13 @@ import SongList from "../components/SongList";
 export default function SongsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [groupId, setGroupId] = useState("1");
+  const {groupSelected} = useContext(AppContext)
   
 
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["songs", currentPage, searchTerm],
+    queryKey: ["songs", currentPage, searchTerm, groupSelected],
     queryFn: () =>
-      getSongs(groupId, currentPage, searchTerm).then((res) => res.data),
+      getSongs(groupSelected.id, currentPage, searchTerm).then((res) => res.data),
     keepPreviousData: true,
   });
 
