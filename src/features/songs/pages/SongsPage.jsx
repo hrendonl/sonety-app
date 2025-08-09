@@ -71,7 +71,7 @@ export default function SongsPage() {
         </div>
         {/* ✨ El botón de filtros mantiene su tamaño ✨ */}
         <button
-          className="flex-shrink-0 flex items-center justify-center gap-2 bg-gray-700 hover:bg-gray-600 rounded-lg px-4 py-2 font-semibold transition-colors"
+          className="flex-shrink-0 flex items-center justify-center gap-2 bg-gray-700 hover:bg-gray-600 text-gray-400 hover:text-white cursor-pointer rounded-lg px-4 py-2 font-semibold transition-colors"
         >
           <MdFilterList size={20} />
           <span className="hidden sm:inline">Filtros</span>

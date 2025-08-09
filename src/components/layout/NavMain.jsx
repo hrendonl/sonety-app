@@ -30,7 +30,7 @@ export default function NavMain({ setSidebarOpen }) {
   ];
 
   return (
-    <div className="w-64 p-4 flex flex-col bg-gray-800">
+    <div className="w-52 p-4 flex flex-col bg-gray-800">
       <div className="mb-6">
         <div className="flex items-start justify-between">
           <Link to="/dashboard">
