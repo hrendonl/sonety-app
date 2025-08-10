@@ -2,13 +2,13 @@
 
 @layer utilities {
   .range-thumb-blue::-webkit-slider-thumb {
-    @apply bg-white w-3 h-3 rounded-full cursor-pointer;
+    @apply bg-[#F5790C] w-3 h-3 rounded-full cursor-pointer;
     -webkit-appearance: none;
     margin-top: -2px; /* para centrarlo verticalmente */
   }
 
   .range-thumb-blue::-moz-range-thumb {
-    @apply bg-white w-3 h-3 rounded-full cursor-pointer;
+    @apply bg-[#F5790C] w-3 h-3 rounded-full cursor-pointer;
   }
 
   .range-thumb-blue {

@@ -16,7 +16,7 @@ export default function DashboardLayout() {
           isSidebarOpen={isSidebarOpen}
           setSidebarOpen={setSidebarOpen}
         />
-        <main className="flex-1 overflow-y-auto p-4 pb-32 lg:pl-10 lg:pr-10 lg:pb-24 space-y-8">
+        <main className="flex-1 overflow-y-auto p-4 pb-32 lg:pl-8 lg:pr-8 lg:pb-24 space-y-8">
           <Header setSidebarOpen={setSidebarOpen} />
           <Outlet />
         </main>

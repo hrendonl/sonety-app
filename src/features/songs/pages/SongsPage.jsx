@@ -71,7 +71,7 @@ export default function SongsPage() {
         </div>
         {/* ✨ El botón de filtros mantiene su tamaño ✨ */}
         <button
-          className="flex-shrink-0 flex items-center justify-center gap-2 bg-gray-700 hover:bg-gray-600 text-gray-400 hover:text-white cursor-pointer rounded-lg px-4 py-2 font-semibold transition-colors"
+          className="flex-shrink-0 flex items-center justify-center gap-2 bg-gray-700 text-white cursor-pointer rounded-lg px-4 py-2 font-bold transition-colors"
         >
           <MdFilterList size={20} />
           <span className="hidden sm:inline">Filtros</span>
@@ -84,7 +84,7 @@ export default function SongsPage() {
         <div className="w-full flex items-center justify-between gap-4">
           <Link
             to="/songs/new"
-            className="flex-shrink-0 flex items-center justify-center gap-2 hover:bg-green-600 bg-green-700 rounded-lg px-4 py-2 text-sm font-semibold transition-colors"
+            className="flex-shrink-0 flex items-center justify-center gap-2  bg-[#f57a0c] text-white font-bold rounded-lg px-4 py-2 text-sm  transition-colors"
           >
             <MdAdd size={20} />
             <span>Nueva Canción</span>

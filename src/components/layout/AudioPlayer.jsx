@@ -75,6 +75,7 @@ export default function AudioPlayer() {
         if (event.data === 0) {
           // 0 = 'ended'
           closePlayer();
+          document.title = `Sonety - Canciones`
         }
       });
 
@@ -113,7 +114,7 @@ export default function AudioPlayer() {
     : 0;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 flex flex-col border-t border-t-gray-700 bg-gray-900 p-3 text-white shadow-lg lg:flex-row lg:items-center lg:p-4">
+    <div className="fixed bottom-0 left-0 right-0 z-50 flex flex-col border-t border-t-gray-700 bg-gray-950 p-3 text-white shadow-lg lg:flex-row lg:items-center lg:p-4">
       {/* --- Sección Izquierda y Derecha (Móvil) / Izquierda (Desktop) --- */}
       <div className="flex w-full items-center justify-between lg:w-1/3">
         {/* Info de la Canción */}
@@ -174,7 +175,7 @@ export default function AudioPlayer() {
             onChange={handleSeekChange}
             className="range-thumb-blue"
             style={{
-              background: `linear-gradient(to right, white 0%, white ${percentage}%, #4b5563 ${percentage}%, #4b5563 100%)`,
+              background: `linear-gradient(to right, #F5790C 0%, #F5790C ${percentage}%, #4b5563 ${percentage}%, #4b5563 100%)`,
             }}
           />
           <span className="hidden w-10 text-xs text-gray-400 sm:inline">

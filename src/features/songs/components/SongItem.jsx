@@ -98,8 +98,8 @@ export default function SongItem({ song, refetch }) {
   return (
     <div
       className={`rounded-lg p-3 sm:p-4 ${
-        getIsCurrentlyPlaying() ? "bg-[#384456]" : "bg-gray-800"
-      } hover:bg-[#384456] flex items-center justify-between md:grid md:grid-cols-[1fr_repeat(3,minmax(0,90px))_minmax(0,140px)] md:gap-4`}
+        getIsCurrentlyPlaying() ? "bg-gray-700" : "bg-gray-800"
+      } hover:bg-gray-700 flex items-center justify-between md:grid md:grid-cols-[1fr_repeat(3,minmax(0,90px))_minmax(0,140px)] md:gap-4`}
     >
       {/* Columna 1: Info de la Canción */}
       <div className="flex min-w-0 flex-grow items-center gap-4">
@@ -113,7 +113,7 @@ export default function SongItem({ song, refetch }) {
           <SongPlaceholder />
         )}
         <div className="min-w-0 flex-grow">
-          <p className="truncate font-bold text-white">{song.title}</p>
+          <p className={`truncate font-bold ${getIsCurrentlyPlaying() ? "text-[#F5790C]" : "text-white"}`}>{song.title}</p>
           <p className="truncate text-sm text-gray-400">{song.artist.name}</p>
         </div>
       </div>
@@ -135,7 +135,7 @@ export default function SongItem({ song, refetch }) {
             title="Reproducir/Pausar"
           >
             {getIsCurrentlyPlaying() ? (
-              <MdPause size={24} />
+              <MdPause className="text-[#F5790C]" size={24} />
             ) : (
               <MdPlayArrow size={24} />
             )}
