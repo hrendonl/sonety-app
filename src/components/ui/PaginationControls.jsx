@@ -26,7 +26,7 @@ export default function PaginationControls({ currentPage, totalPages, onPageChan
         {/* Anterior */}
       </button>
 
-      <span className="text-gray-300">
+      <span className="text-gray-300 sm:hidden">
         Página {currentPage} de {totalPages}
       </span>
 

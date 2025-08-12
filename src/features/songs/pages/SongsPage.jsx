@@ -31,7 +31,6 @@ import { AppContext } from "../../../context/AppProvider";
 //   };
 // };
 // --- Fin del mock ---
-
 export default function SongsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
