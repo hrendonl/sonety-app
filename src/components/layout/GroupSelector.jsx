@@ -31,10 +31,11 @@ export default function GroupSelector() {
             title={group.name}
           >
             <div
-              className="
+              className={`
                 h-10 w-10 shrink-0 overflow-hidden rounded-xl
-                bg-gray-700 transition-all duration-200 
-                "
+              bg-gray-700 transition-all duration-200
+              ${groupSelected.id === group.id ? "border-2 border-[#F5790C]" : "border-2 border-gray-700"}
+              `}
             >
               <GroupAvatar group={group} />
             </div>
@@ -43,7 +44,7 @@ export default function GroupSelector() {
       ))}
       <div className="h-px w-8 bg-gray-700" />
 
-      <button 
+      <button
         className="flex h-10 w-10 shrink-0 items-center justify-center  bg-gray-700 text-white transition-all duration-200 rounded-xl hover:bg-gray-600"
         title="Añadir un grupo"
       >
