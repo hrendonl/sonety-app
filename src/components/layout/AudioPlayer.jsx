@@ -114,7 +114,7 @@ export default function AudioPlayer() {
     : 0;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 flex flex-col border-t border-t-gray-800 bg-gray-950 p-3 text-white shadow-lg lg:flex-row lg:items-center lg:p-4">
+    <div className="fixed bottom-0 left-0 right-0 z-50 flex flex-col border-t border-t-gray-800 bg-app-bg p-3 text-white shadow-lg lg:flex-row lg:items-center lg:p-4">
       {/* --- Sección Izquierda y Derecha (Móvil) / Izquierda (Desktop) --- */}
       <div className="flex w-full items-center justify-between lg:w-1/3">
         {/* Info de la Canción */}
