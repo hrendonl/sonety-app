@@ -7,6 +7,7 @@ import { getSongs } from "../../../api/songApi";
 import SearchBox from "../../../components/ui/SearchBox";
 import SongList from "../components/SongList";
 import { AppContext } from "../../../context/AppProvider";
+import FilterPanel from "../components/FilterPanel";
 
 // --- Mock de datos y función de fetch (reemplaza con tu llamada a la API real) ---
 // const allSongs = Array.from({ length: 25 }, (_, i) => ({
@@ -34,19 +35,27 @@ import { AppContext } from "../../../context/AppProvider";
 export default function SongsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const {groupSelected} = useContext(AppContext)
-  
+  const { groupSelected } = useContext(AppContext);
+  // ✨ 2. Estados para los filtros y la visibilidad del panel
+  const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
+  const [filters, setFilters] = useState({
+    key_chord: "", // Tono
+    tempo: "", // Tempo
+    tags: [], // Etiquetas (IDs)
+  });
 
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["songs", currentPage, searchTerm, groupSelected],
+    queryKey: ["songs", currentPage, searchTerm, groupSelected, filters],
     queryFn: () =>
-      getSongs(groupSelected.id, currentPage, searchTerm).then((res) => res.data),
+      getSongs(groupSelected.id, currentPage, searchTerm, filters).then(
+        (res) => res.data
+      ),
     keepPreviousData: true,
   });
 
   const handleSearch = async (query) => {
     setSearchTerm(query);
-    setCurrentPage(1)
+    setCurrentPage(1);
     await refetch();
   };
 
@@ -57,24 +66,33 @@ export default function SongsPage() {
 
   return (
     <div className="text-white space-y-6">
-
       {/* --- Barra de Búsqueda y Filtros --- */}
-      <div className="flex flex-row gap-3">
-        {/* ✨ El SearchBox ahora ocupa el espacio disponible ✨ */}
-        <div className="flex-grow">
-          <SearchBox
-            handleOnChange={handleSearch}
-            searchTerm={searchTerm}
-            placeholder="Buscar por canción o artista..."
-          />
+      <div className="flex flex-col">
+        <div className="flex flex-row gap-3">
+          <div className="flex-grow">
+            <SearchBox
+              handleOnChange={handleSearch}
+              searchTerm={searchTerm}
+              placeholder="Buscar por canción o artista..."
+            />
+          </div>
+          {/* ✨ 5. Añade el onClick para mostrar/ocultar el panel */}
+          <button
+            onClick={() => setIsFilterPanelOpen((prev) => !prev)}
+            className={`flex-shrink-0 flex items-center justify-center gap-2 text-gray-400 hover:text-white cursor-pointer rounded-lg px-4 py-2 font-bold transition-all ${
+              isFilterPanelOpen ? "bg-[#f57a0c] text-white" : "bg-gray-700"
+            }`}
+          >
+            <MdFilterList size={20} />
+            <span className="hidden sm:inline">Filtros</span>
+          </button>
         </div>
-        {/* ✨ El botón de filtros mantiene su tamaño ✨ */}
-        <button
-          className="flex-shrink-0 flex items-center justify-center gap-2 bg-gray-700 text-white cursor-pointer rounded-lg px-4 py-2 font-bold transition-colors"
-        >
-          <MdFilterList size={20} />
-          <span className="hidden sm:inline">Filtros</span>
-        </button>
+
+        <FilterPanel
+          isOpen={isFilterPanelOpen}
+          filters={filters}
+          setFilters={setFilters}
+        />
       </div>
 
       {/* --- Barra de Paginación y Acciones --- */}
@@ -88,7 +106,7 @@ export default function SongsPage() {
             <MdAdd size={20} />
             <span>Nueva Canción</span>
           </Link>
-           <div>
+          <div>
             <p className="text-gray-400">
               Total:
               <span className="font-bold text-white pl-3">
@@ -104,7 +122,12 @@ export default function SongsPage() {
         />
       </div>
 
-      <SongList songs={data?.list} isLoading={isLoading} error={error} refetch={refetch}/>
+      <SongList
+        songs={data?.list}
+        isLoading={isLoading}
+        error={error}
+        refetch={refetch}
+      />
     </div>
   );
 }

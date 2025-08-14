@@ -1,9 +1,15 @@
 import apiClient  from "./apiClient";
 
-export const getSongs = async (groupId, page=1, searchTerm=null) => {
+export const getSongs = async (groupId, page=1, searchTerm=null, filters) => {
     let params = {}
     if (searchTerm) {
       params[`filter[q]`] = searchTerm;
+    }
+    if(filters.key_chord != ""){
+        params[`filter[key_chord]`] = filters.key_chord;
+    }
+    if(filters.tags.length > 0) {
+        params["filter[tag]"] = filters.tags[0]
     }
     params[`filter[group_id]`] = groupId;
     params["page[limit]"] = 5
