@@ -121,7 +121,7 @@ export default function SongItem({ song, refetch }) {
 
           <button
             onClick={handleDesktop}
-            className={`absolute inset-0 z-10 flex items-center justify-center rounded-md bg-[#00000080] transition-all duration-200
+            className={`absolute inset-0 z-10 flex items-center justify-center rounded-md bg-[#0000009e] transition-all duration-200
               ${
                 isCurrentlyPlaying
                   ? "bg-opacity-40" // Si está sonando: fondo semitransparente SIEMPRE visible.
