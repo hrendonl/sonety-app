@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import {
   MdPlayArrow,
-  MdArticle,
-  MdDelete,
   MdPause,
   MdMoreVert,
+  MdControlPoint,
+  MdOutlineVisibility
 } from "react-icons/md";
 import { getImageYoutube } from "../../../utils/getImageYoutube";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -145,15 +145,8 @@ export default function SongItem({ song, refetch }) {
             className="rounded-full p-2 hover:bg-app-button-bg hover:text-white"
             title="Ver Letra"
           >
-            <MdArticle size={22} />
+            <MdControlPoint size={22} />
           </Link>
-          <button
-            onClick={handleDelete}
-            className="rounded-full p-2 hover:bg-app-button-bg hover:text-white"
-            title="Borrar"
-          >
-            <MdDelete size={22} />
-          </button>
         </div>
 
         {/* VISTA MÓVIL Y TABLET: Menú Desplegable */}
@@ -184,14 +177,8 @@ export default function SongItem({ song, refetch }) {
                   className="flex w-full items-center px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-app-button-bg"
                   onClick={() => setDropdownOpen(false)}
                 >
-                  <MdArticle className="mr-3" /> Ver Letra
+                  <MdControlPoint className="mr-3" /> Ver Letra
                 </Link>
-                <button
-                  onClick={handleDelete}
-                  className="flex w-full items-center px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-app-button-bg"
-                >
-                  <MdDelete className="mr-3" /> Borrar
-                </button>
               </div>
             </div>
           )}
