@@ -4,7 +4,7 @@ import {
   MdPause,
   MdMoreVert,
   MdControlPoint,
-  MdOutlineVisibility
+  MdOutlineVisibility,
 } from "react-icons/md";
 import { getImageYoutube } from "../../../utils/getImageYoutube";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -68,7 +68,7 @@ export default function SongItem({ song, refetch }) {
   const handleDelete = async () => {
     if (window.confirm(`¿Borrar "${song.title}"?`)) {
       await deleteSong(song.id);
-      await refetch()
+      await refetch();
     }
   };
 
@@ -95,51 +95,83 @@ export default function SongItem({ song, refetch }) {
     }
   };
 
+  // Guardamos el estado para no llamar la función múltiples veces en el render
+  const isCurrentlyPlaying = getIsCurrentlyPlaying();
+
   return (
     <div
       className={`rounded-lg p-3 sm:p-4 ${
-        getIsCurrentlyPlaying() ? "bg-app-surface-hover" : "bg-app-surface"
+        isCurrentlyPlaying ? "bg-app-surface-hover" : "bg-app-surface"
       } hover:bg-app-surface-hover flex items-center justify-between md:grid md:grid-cols-[1fr_repeat(3,minmax(0,90px))_minmax(0,140px)] md:gap-4`}
     >
       {/* Columna 1: Info de la Canción */}
       <div className="flex min-w-0 flex-grow items-center gap-4">
-        {song.youtube_url ? (
-          <img
-            src={getImageYoutube(song.youtube_url)}
-            alt={song.title}
-            className="h-12 w-12 shrink-0 rounded-md object-cover sm:h-14 sm:w-14"
-          />
-        ) : (
-          <SongPlaceholder />
-        )}
+        {/* ===== INICIO DEL CAMBIO 1: CONTENEDOR DE LA IMAGEN ===== */}
+        <div className="relative shrink-0 group">
+          {/* Imagen o Placeholder */}
+          {song.youtube_url ? (
+            <img
+              src={getImageYoutube(song.youtube_url)}
+              alt={song.title}
+              className="h-12 w-12 shrink-0 rounded-md object-cover sm:h-14 sm:w-14"
+            />
+          ) : (
+            <SongPlaceholder />
+          )}
+
+          <button
+            onClick={handleDesktop}
+            className={`absolute inset-0 z-10 flex items-center justify-center rounded-md bg-[#00000080] transition-all duration-200
+              ${
+                isCurrentlyPlaying
+                  ? "bg-opacity-40" // Si está sonando: fondo semitransparente SIEMPRE visible.
+                  : "bg-opacity-0 opacity-0 group-hover:bg-opacity-40 group-hover:opacity-100" // Si no está sonando: invisible por defecto, aparece en hover.
+              }`}
+            aria-label={isCurrentlyPlaying ? "Pausar" : "Reproducir"}
+          >
+            {isCurrentlyPlaying ? (
+              <MdPause className="text-white" size={32} />
+            ) : (
+              <MdPlayArrow className="text-white" size={32} />
+            )}
+          </button>
+        </div>
+        {/* ===== FIN DEL CAMBIO 1 ===== */}
+
         <div className="min-w-0 flex-grow">
-          <p className={`truncate font-bold ${getIsCurrentlyPlaying() ? "text-app-accent" : "text-white"}`}>{song.title}</p>
-          <p className="truncate text-sm text-app-subtext">{song.artist.name}</p>
+          <p
+            className={`truncate font-bold ${
+              isCurrentlyPlaying ? "text-app-accent" : "text-white"
+            }`}
+          >
+            {song.title}
+          </p>
+          <p className="truncate text-sm text-app-subtext">
+            {song.artist.name}
+          </p>
         </div>
       </div>
 
       {/* Columnas 2, 3 y 4: Detalles (Tono, Tempo, Duración) */}
       <div className="hidden md:contents">
-        <p className="font-semibold text-gray-300 text-center">{song.key_chord}</p>
-        <p className="font-semibold text-gray-300 text-center">{song.tempo_BPM} bpm</p>
-        <p className="font-semibold text-gray-300 text-center">{song.duration}</p>
+        <p className="font-semibold text-gray-300 text-center">
+          {song.key_chord}
+        </p>
+        <p className="font-semibold text-gray-300 text-center">
+          {song.tempo_BPM} bpm
+        </p>
+        <p className="font-semibold text-gray-300 text-center">
+          {song.duration}
+        </p>
       </div>
 
       {/* Columna 5: Acciones */}
       <div className="flex shrink-0 justify-end">
         {/* VISTA DESKTOP: Botones individuales */}
         <div className="hidden lg:flex items-center gap-1 text-app-subtext sm:gap-2">
-          <button
-            onClick={handleDesktop}
-            className="rounded-full p-2 hover:bg-app-button-bg hover:text-white"
-            title="Reproducir/Pausar"
-          >
-            {getIsCurrentlyPlaying() ? (
-              <MdPause className="text-app-accent" size={24} />
-            ) : (
-              <MdPlayArrow size={24} />
-            )}
-          </button>
+          {/* ===== INICIO DEL CAMBIO 2: ELIMINAR BOTÓN ANTIGUO ===== */}
+          {/* El botón de Play/Pause se ha movido a la imagen */}
+          {/* ===== FIN DEL CAMBIO 2 ===== */}
           <Link
             to={`/groups/${song.group_id}/songs/${song.id}/lyrics`}
             className="rounded-full p-2 hover:bg-app-button-bg hover:text-white"
@@ -165,12 +197,12 @@ export default function SongItem({ song, refetch }) {
                   onClick={handleMovil}
                   className="flex w-full items-center px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-app-button-bg"
                 >
-                  {getIsCurrentlyPlaying() ? (
+                  {isCurrentlyPlaying ? (
                     <MdPause className="mr-3" />
                   ) : (
                     <MdPlayArrow className="mr-3" />
                   )}
-                  {getIsCurrentlyPlaying() ? "Pausar" : "Reproducir"}
+                  {isCurrentlyPlaying ? "Pausar" : "Reproducir"}
                 </button>
                 <Link
                   to={`/groups/${song.group_id}/songs/${song.id}/lyrics`}
