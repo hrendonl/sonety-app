@@ -20,7 +20,7 @@ export default function PaginationControls({ currentPage, totalPages, onPageChan
       <button
         onClick={handlePrevious}
         disabled={currentPage === 1}
-        className="flex items-center gap-1 px-2 py-2 font-semibold text-white bg-gray-700 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-600"
+        className="flex items-center gap-1 px-2 py-2 font-semibold text-white bg-app-surface-hover rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-app-button-bg"
       >
         <MdNavigateBefore size={22} />
         {/* Anterior */}
@@ -33,7 +33,7 @@ export default function PaginationControls({ currentPage, totalPages, onPageChan
       <button
         onClick={handleNext}
         disabled={currentPage === totalPages}
-        className="flex items-center gap-1 px-2 py-2 font-semibold text-white bg-gray-700 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-600"
+        className="flex items-center gap-1 px-2 py-2 font-semibold text-white bg-app-surface-hover rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-app-button-bg"
       >
         {/* Siguiente */}
         <MdNavigateNext size={22} />

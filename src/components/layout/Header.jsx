@@ -55,10 +55,10 @@ export default function Header({
             />
           ) : (
             // SVG por defecto si no hay imagen
-            <div className="lg:w-9 lg:h-9 h-8 w-8 rounded-full bg-gray-600 flex items-center justify-center">
+            <div className="lg:w-9 lg:h-9 h-8 w-8 rounded-full bg-app-surface-hover flex items-center justify-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-gray-400"
+                className="h-6 w-6 text-app-subtext"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -75,7 +75,7 @@ export default function Header({
         </button>
 
         {dropdownOpen && (
-          <div className="absolute right-0 w-48 mt-2 origin-top-right bg-gray-700 rounded-md shadow-lg z-50">
+          <div className="absolute right-0 w-48 mt-2 origin-top-right bg-app-surface-hover rounded-md shadow-lg z-50">
             <div className="py-1">
               <div className="px-4 py-2 border-b border-gray-600">
                 <p className="text-sm font-medium text-white">

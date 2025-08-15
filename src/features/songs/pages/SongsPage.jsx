@@ -79,8 +79,8 @@ export default function SongsPage() {
           {/* ✨ 5. Añade el onClick para mostrar/ocultar el panel */}
           <button
             onClick={() => setIsFilterPanelOpen((prev) => !prev)}
-            className={`flex-shrink-0 flex items-center justify-center gap-2 text-gray-400 hover:text-white cursor-pointer rounded-lg px-4 py-2 font-bold transition-all ${
-              isFilterPanelOpen ? "bg-[#f57a0c] text-white" : "bg-gray-700"
+            className={`flex-shrink-0 flex items-center justify-center gap-2 text-white cursor-pointer rounded-lg px-4 py-2 font-bold transition-all ${
+              isFilterPanelOpen ? "bg-[#f57a0c] text-white" : "bg-app-surface-hover hover:bg-app-button-bg"
             }`}
           >
             <MdFilterList size={20} />
@@ -101,7 +101,7 @@ export default function SongsPage() {
         <div className="w-full flex items-center justify-between gap-4">
           <Link
             to="/songs/new"
-            className="flex-shrink-0 flex items-center justify-center gap-2  bg-[#f57a0c] text-white font-bold rounded-lg px-4 py-2 text-sm  transition-colors"
+            className="flex-shrink-0 flex items-center justify-center gap-2  bg-blue-600 text-white font-bold rounded-lg px-4 py-2 text-sm  transition-colors"
           >
             <MdAdd size={20} />
             <span>Nueva Canción</span>

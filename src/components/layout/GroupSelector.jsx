@@ -15,12 +15,12 @@ export default function GroupSelector() {
   });
 
   return (
-    <div className="flex flex-col items-center space-y-4 bg-gray-900 p-3">
+    <div className="flex flex-col items-center space-y-4 bg-app-surface border-r border-r-app-border p-3">
       {data?.list.map((group) => (
         <div key={group.id} className="relative">
           {groupSelected.id === group.id && (
             <div
-              className="absolute -left-3 top-0 h-full w-1 rounded-full bg-[#F5790C]"
+              className="absolute -left-3 top-0 h-full w-1 rounded-full bg-blue-600"
               aria-hidden="true"
             />
           )}
@@ -34,7 +34,7 @@ export default function GroupSelector() {
               className={`
                 h-10 w-10 shrink-0 overflow-hidden rounded-xl
               bg-gray-700 transition-all duration-200
-              ${groupSelected.id === group.id ? "border-2 border-[#F5790C]" : "border-2 border-gray-700"}
+              ${groupSelected.id === group.id ? "border-2 border-blue-600" : "border-2 border-app-button-bg"}
               `}
             >
               <GroupAvatar group={group} />
@@ -45,7 +45,7 @@ export default function GroupSelector() {
       <div className="h-px w-8 bg-gray-700" />
 
       <button
-        className="flex h-10 w-10 shrink-0 items-center justify-center  bg-gray-700 text-white transition-all duration-200 rounded-xl hover:bg-gray-600"
+        className="flex h-10 w-10 shrink-0 items-center justify-center  bg-app-surface-hover text-white transition-all duration-200 rounded-xl hover:bg-app-button-bg"
         title="Añadir un grupo"
       >
         <MdAdd size={30} />

@@ -8,7 +8,7 @@ import {
   MdPeopleOutline,
   MdOutlineSettings
 } from "react-icons/md";
-import Logo from "../../assets/images/logo_prev.png";
+import Logo from "../../assets/images/logo_prev2.png";
 import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";
@@ -32,7 +32,7 @@ export default function NavMain({ setSidebarOpen }) {
   ];
 
   return (
-    <div className="w-52 p-4 flex flex-col bg-gray-900">
+    <div className="w-52 p-4 flex flex-col bg-app-bg border-r border-r-app-border">
       <div className="mb-6">
         <div className="flex items-start justify-between">
           <Link to="/dashboard">
@@ -54,7 +54,7 @@ export default function NavMain({ setSidebarOpen }) {
                 }`}
                 className={({ isActive }) =>
                   `flex items-center w-full p-3 rounded-lg font-bold ${
-                    isActive ? "bg-gray-700 hover:bg-gray-700 text-white hover:text-white" : "hover:bg-gray-900 text-gray-500 hover:text-white"
+                    isActive ? "bg-app-surface-hover hover:bg-app-surface-hover text-white hover:text-white" : "text-app-subtext hover:text-white"
                   }`
                 }
               >

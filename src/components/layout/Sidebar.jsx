@@ -9,7 +9,7 @@ export default function Sidebar({ isSidebarOpen, setSidebarOpen }) {
         h-full text-white flex z-40
         fixed inset-y-0 left-0 
         transform transition-transform duration-300 ease-in-out
-        lg:relative lg:translate-x-0 border-r border-r-gray-700
+        lg:relative lg:translate-x-0 
         ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
       `}
     >

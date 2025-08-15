@@ -15,7 +15,7 @@ export default function GroupAvatar({ group }) {
     .substring(0, 2)
     .toUpperCase();
   return (
-    <div className="w-full h-full bg-gray-700 flex items-center justify-center">
+    <div className="w-full h-full bg-app-button-bg flex items-center justify-center">
       <span className="font-bold text-white">{initials}</span>
     </div>
   );
