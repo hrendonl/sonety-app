@@ -20,7 +20,7 @@ export default function GroupSelector() {
         <div key={group.id} className="relative">
           {groupSelected.id === group.id && (
             <div
-              className="absolute -left-3 top-0 h-full w-1 rounded-full bg-blue-600"
+              className="absolute -left-3 top-0 h-full w-1 rounded-full bg-app-accent"
               aria-hidden="true"
             />
           )}
@@ -34,7 +34,7 @@ export default function GroupSelector() {
               className={`
                 h-10 w-10 shrink-0 overflow-hidden rounded-xl
               bg-gray-700 transition-all duration-200
-              ${groupSelected.id === group.id ? "border-2 border-blue-600" : "border-2 border-app-button-bg"}
+              ${groupSelected.id === group.id ? "border-2 border-app-accent" : "border-2 border-app-button-bg"}
               `}
             >
               <GroupAvatar group={group} />

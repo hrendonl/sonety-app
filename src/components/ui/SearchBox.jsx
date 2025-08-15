@@ -14,7 +14,7 @@ export default function SearchBox({ handleOnChange, searchTerm, placeholder }) {
       <input
         type="text"
         placeholder={placeholder}
-        className="w-full bg-app-surface-hover text-white rounded-lg py-2 pl-10 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full bg-app-surface-hover text-white rounded-lg py-2 pl-10 pr-10 focus:outline-none focus:ring-2 focus:ring-app-accent"
         value={searchTerm}
         onChange={(e) => handleOnChange(e.target.value)}
       />

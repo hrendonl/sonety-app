@@ -113,7 +113,7 @@ export default function SongItem({ song, refetch }) {
           <SongPlaceholder />
         )}
         <div className="min-w-0 flex-grow">
-          <p className={`truncate font-bold ${getIsCurrentlyPlaying() ? "text-blue-400" : "text-white"}`}>{song.title}</p>
+          <p className={`truncate font-bold ${getIsCurrentlyPlaying() ? "text-app-accent" : "text-white"}`}>{song.title}</p>
           <p className="truncate text-sm text-app-subtext">{song.artist.name}</p>
         </div>
       </div>
@@ -135,7 +135,7 @@ export default function SongItem({ song, refetch }) {
             title="Reproducir/Pausar"
           >
             {getIsCurrentlyPlaying() ? (
-              <MdPause className="text-white" size={24} />
+              <MdPause className="text-app-accent" size={24} />
             ) : (
               <MdPlayArrow size={24} />
             )}

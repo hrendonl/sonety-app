@@ -175,7 +175,7 @@ export default function AudioPlayer() {
             onChange={handleSeekChange}
             className="range-thumb-blue"
             style={{
-              background: `linear-gradient(to right, #155dfc 0%, #155dfc ${percentage}%, #4b5563 ${percentage}%, #4b5563 100%)`,
+              background: `linear-gradient(to right, #F2780C 0%, #F2780C ${percentage}%, #4b5563 ${percentage}%, #4b5563 100%)`,
             }}
           />
           <span className="hidden w-10 text-xs text-gray-400 sm:inline">
