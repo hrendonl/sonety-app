@@ -81,18 +81,6 @@ export default function SongsPage() {
 
   return (
     <div className="text-white space-y-6">
-      {/* SECCIÓN 1: Cabecera de la Página */}
-      {/* <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Canciones</h1>
-        <Link
-          to="/songs/new"
-          className="flex-shrink-0 flex items-center justify-center gap-2 bg-app-accent text-white font-bold rounded-lg px-4 py-2 text-sm transition-colors"
-        >
-          <MdAdd size={20} />
-          <span>Nueva Canción</span>
-        </Link>
-      </div> */}
-
       {/* SECCIÓN 2: Controles de la Lista */}
       <div className="flex flex-col gap-3">
         <div className="flex flex-row gap-3">
