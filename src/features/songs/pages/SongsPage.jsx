@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { MdAdd, MdSearch, MdFilterList } from "react-icons/md";
+import { MdAdd, MdFilterList } from "react-icons/md";
 import PaginationControls from "../../../components/ui/PaginationControls";
 import { getSongs } from "../../../api/songApi";
 import SearchBox from "../../../components/ui/SearchBox";
@@ -9,42 +9,42 @@ import SongList from "../components/SongList";
 import { AppContext } from "../../../context/AppProvider";
 import FilterPanel from "../components/FilterPanel";
 
-// --- Mock de datos y función de fetch (reemplaza con tu llamada a la API real) ---
-// const allSongs = Array.from({ length: 25 }, (_, i) => ({
-//   id: i + 1,
-//   title: `Canción Número ${i + 1}`,
-//   artist: 'Artista Famoso',
-//   key: 'G',
-//   tempo: 120 + (i % 10),
-//   duration: 180 + i * 5, // Duración en segundos (ej. 3:00, 3:05, etc.)
-//   // imageUrl: 'https://i.ytimg.com/vi/C4DqvUby9B0/mqdefault.jpg'
-// }));
+// Componente para el estado de carga (Skeleton)
+const SongListSkeleton = () => (
+  <div className="space-y-4 animate-pulse">
+    {[...Array(5)].map((_, i) => (
+      <div key={i} className="h-20 bg-app-surface-hover rounded-lg"></div>
+    ))}
+  </div>
+);
 
-// const fetchSongs = async (page = 1, limit = 5) => {
-//   console.log(`Fetching page: ${page}`);
-//   await new Promise(resolve => setTimeout(resolve, 500));
-//   const start = (page - 1) * limit;
-//   const end = start + limit;
-//   const paginatedSongs = allSongs.slice(start, end);
-//   return {
-//     songs: paginatedSongs,
-//     totalPages: Math.ceil(allSongs.length / limit),
-//   };
-// };
-// --- Fin del mock ---
+// Componente para estados vacíos o de error
+const InfoState = ({ message, onRetry }) => (
+  <div className="text-center py-16 px-6 bg-app-surface-hover rounded-lg">
+    <p className="text-gray-400">{message}</p>
+    {onRetry && (
+      <button
+        onClick={onRetry}
+        className="mt-4 px-4 py-2 bg-app-accent rounded-lg font-bold"
+      >
+        Reintentar
+      </button>
+    )}
+  </div>
+);
+
 export default function SongsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const { groupSelected } = useContext(AppContext);
-  // ✨ 2. Estados para los filtros y la visibilidad del panel
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
   const [filters, setFilters] = useState({
-    key_chord: "", // Tono
-    tempo: "", // Tempo
-    tags: [], // Etiquetas (IDs)
+    key_chord: "",
+    tempo: "",
+    tags: [],
   });
 
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["songs", currentPage, searchTerm, groupSelected, filters],
     queryFn: () =>
       getSongs(groupSelected.id, currentPage, searchTerm, filters).then(
@@ -56,18 +56,45 @@ export default function SongsPage() {
   const handleSearch = async (query) => {
     setSearchTerm(query);
     setCurrentPage(1);
-    await refetch();
+    // No es necesario refetch aquí, React Query lo hace automáticamente al cambiar el queryKey
   };
 
-  // const filteredSongs = data?.songs?.filter(song =>
-  //   song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //   song.artist.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
+  const renderContent = () => {
+    if (isLoading) {
+      return <SongListSkeleton />;
+    }
+    if (isError) {
+      return (
+        <InfoState
+          message={`Error al cargar las canciones: ${error.message}`}
+          onRetry={refetch}
+        />
+      );
+    }
+    if (!data?.list || data.list.length === 0) {
+      return (
+        <InfoState message="No se encontraron canciones. ¡Prueba a cambiar los filtros o añade una nueva!" />
+      );
+    }
+    return <SongList songs={data.list} />;
+  };
 
   return (
     <div className="text-white space-y-6">
-      {/* --- Barra de Búsqueda y Filtros --- */}
-      <div className="flex flex-col">
+      {/* SECCIÓN 1: Cabecera de la Página */}
+      {/* <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-bold">Canciones</h1>
+        <Link
+          to="/songs/new"
+          className="flex-shrink-0 flex items-center justify-center gap-2 bg-app-accent text-white font-bold rounded-lg px-4 py-2 text-sm transition-colors"
+        >
+          <MdAdd size={20} />
+          <span>Nueva Canción</span>
+        </Link>
+      </div> */}
+
+      {/* SECCIÓN 2: Controles de la Lista */}
+      <div className="flex flex-col gap-3">
         <div className="flex flex-row gap-3">
           <div className="flex-grow">
             <SearchBox
@@ -76,58 +103,55 @@ export default function SongsPage() {
               placeholder="Buscar por canción o artista..."
             />
           </div>
-          {/* ✨ 5. Añade el onClick para mostrar/ocultar el panel */}
           <button
             onClick={() => setIsFilterPanelOpen((prev) => !prev)}
             className={`flex-shrink-0 flex items-center justify-center gap-2 text-white cursor-pointer rounded-lg px-4 py-2 font-bold transition-all ${
-              isFilterPanelOpen ? "bg-app-accent text-white" : "bg-app-surface-hover hover:bg-app-button-bg"
+              isFilterPanelOpen
+                ? "bg-app-accent text-white"
+                : "bg-app-surface-hover hover:bg-app-button-bg"
             }`}
           >
             <MdFilterList size={20} />
             <span className="hidden sm:inline">Filtros</span>
           </button>
         </div>
-
         <FilterPanel
           isOpen={isFilterPanelOpen}
           filters={filters}
           setFilters={setFilters}
         />
-      </div>
-
-      {/* --- Barra de Paginación y Acciones --- */}
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-        {/* ✨ Contenedor con justify-between para separar los elementos ✨ */}
-        <div className="w-full flex items-center justify-between gap-4">
+        <div className="flex justify-center md:justify-start">
           <Link
             to="/songs/new"
-            className="flex-shrink-0 flex items-center justify-center gap-2  bg-app-accent text-white font-bold rounded-lg px-4 py-2 text-sm  transition-colors"
+            className="w-full md:w-auto flex items-center justify-center gap-2 bg-app-accent text-white font-bold rounded-lg px-4 py-2 text-sm transition-colors"
           >
             <MdAdd size={20} />
             <span>Nueva Canción</span>
           </Link>
-          <div>
-            <p className="text-gray-400">
-              Total:
-              <span className="font-bold text-white pl-3">
-                {data?.pagination.total_items ?? 0}
-              </span>
-            </p>
-          </div>
         </div>
-        <PaginationControls
-          currentPage={currentPage}
-          totalPages={data?.pagination.total_pages}
-          onPageChange={(page) => setCurrentPage(page)}
-        />
       </div>
 
-      <SongList
-        songs={data?.list}
-        isLoading={isLoading}
-        error={error}
-        refetch={refetch}
-      />
+      {/* SECCIÓN 3: Contenido Principal */}
+      <div>{renderContent()}</div>
+
+      {/* SECCIÓN 4: Pie de la Lista (solo se muestra si hay canciones) */}
+      {data?.list && data.list.length > 0 && (
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 pt-4 border-t border-app-surface-hover">
+          <p className="text-gray-400">
+            Total:
+            <span className="font-bold text-white pl-3">
+              {data?.pagination.total_items ?? 0}
+            </span>
+          </p>
+          {data?.pagination.total_pages > 1 && (
+            <PaginationControls
+              currentPage={currentPage}
+              totalPages={data.pagination.total_pages}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }
