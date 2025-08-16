@@ -33,7 +33,7 @@ function SongPlaceholder() {
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 0 00-2 2v12a2 2 0 002 2z"
         />
       </svg>
     </div>
@@ -100,14 +100,14 @@ export default function SongItem({ song, refetch }) {
 
   return (
     <div
+      // AQUI se añade la clase 'group' al contenedor principal
       className={`rounded-lg p-3 sm:p-4 ${
         isCurrentlyPlaying ? "bg-app-surface-hover" : "bg-app-surface"
-      } hover:bg-app-surface-hover flex items-center justify-between md:grid md:grid-cols-[1fr_repeat(3,minmax(0,90px))_minmax(0,140px)] md:gap-4`}
+      } group hover:bg-app-surface-hover flex items-center justify-between md:grid md:grid-cols-[1fr_repeat(3,minmax(0,90px))_minmax(0,140px)] md:gap-4`}
     >
       {/* Columna 1: Info de la Canción */}
       <div className="flex min-w-0 flex-grow items-center gap-4">
-        {/* ===== INICIO DEL CAMBIO 1: CONTENEDOR DE LA IMAGEN ===== */}
-        <div className="relative shrink-0 group">
+        <div className="relative shrink-0"> {/* Se quitó 'group' de aquí */}
           {/* Imagen o Placeholder */}
           {song.youtube_url ? (
             <img
@@ -119,13 +119,14 @@ export default function SongItem({ song, refetch }) {
             <SongPlaceholder />
           )}
 
+          {/* El botón de Play/Pause ahora usa 'group-hover' del componente padre */}
           <button
             onClick={handleDesktop}
-            className={`absolute inset-0 z-10 flex items-center justify-center rounded-md bg-[#0000009e] transition-all duration-200
+            className={`absolute inset-0 z-10 flex items-center justify-center rounded-md bg-[#0000009e] transition-all duration-100
               ${
                 isCurrentlyPlaying
                   ? "bg-opacity-40" // Si está sonando: fondo semitransparente SIEMPRE visible.
-                  : "bg-opacity-0 opacity-0 group-hover:bg-opacity-40 group-hover:opacity-100" // Si no está sonando: invisible por defecto, aparece en hover.
+                  : "bg-opacity-0 opacity-0 group-hover:bg-opacity-40 group-hover:opacity-100" // Si no está sonando: invisible por defecto, aparece en hover del 'SongItem' padre.
               }`}
             aria-label={isCurrentlyPlaying ? "Pausar" : "Reproducir"}
           >
@@ -136,7 +137,6 @@ export default function SongItem({ song, refetch }) {
             )}
           </button>
         </div>
-        {/* ===== FIN DEL CAMBIO 1 ===== */}
 
         <div className="min-w-0 flex-grow">
           <p
@@ -169,9 +169,6 @@ export default function SongItem({ song, refetch }) {
       <div className="flex shrink-0 justify-end">
         {/* VISTA DESKTOP: Botones individuales */}
         <div className="hidden lg:flex items-center gap-1 text-app-subtext sm:gap-2">
-          {/* ===== INICIO DEL CAMBIO 2: ELIMINAR BOTÓN ANTIGUO ===== */}
-          {/* El botón de Play/Pause se ha movido a la imagen */}
-          {/* ===== FIN DEL CAMBIO 2 ===== */}
           <Link
             to={`/groups/${song.group_id}/songs/${song.id}/lyrics`}
             className="rounded-full p-2 hover:bg-app-button-bg hover:text-white"
