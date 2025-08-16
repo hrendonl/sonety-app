@@ -123,23 +123,24 @@ export default function SongsPage() {
       <div>{renderContent()}</div>
 
       {/* SECCIÓN 4: Pie de la Lista (solo se muestra si hay canciones) */}
-      {data?.list && data.list.length > 0 && (
-        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 pt-4 border-t border-app-surface-hover">
-          <p className="text-gray-400">
-            Total:
-            <span className="font-bold text-white pl-3">
-              {data?.pagination.total_items ?? 0}
-            </span>
-          </p>
-          {data?.pagination.total_pages > 1 && (
+      {data?.list &&
+        data.list.length > 0 &&
+        data?.pagination.total_pages > 1 && (
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 pt-4 border-t border-app-surface-hover">
+            <p className="text-gray-400">
+              Total:
+              <span className="font-bold text-white pl-3">
+                {data?.pagination.total_items ?? 0}
+              </span>
+            </p>
+
             <PaginationControls
               currentPage={currentPage}
               totalPages={data.pagination.total_pages}
               onPageChange={(page) => setCurrentPage(page)}
             />
-          )}
-        </div>
-      )}
+          </div>
+        )}
     </div>
   );
 }
