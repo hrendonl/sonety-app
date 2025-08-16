@@ -9,7 +9,7 @@ export default function SongList({ songs, isLoading, error, refetch }) {
         <span className="text-center col-start-3">Tempo</span>
         <span className="text-center col-start-4">Duración</span>
       </div>}
-      <div className="space-y-2 min-h-[340px]">
+      <div className="space-y-2">
         {isLoading && <p className="text-center text-gray-400">Cargando...</p>}
         {error && <p className="text-center text-red-500">Error al cargar.</p>}
         {songs?.map((song) => (
