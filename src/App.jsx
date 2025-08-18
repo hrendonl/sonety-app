@@ -1,14 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Routes, Route } from "react-router-dom";
 import LoginPage from './features/auth/pages/LoginPage'
+import SongsPage from './features/songs/pages/SongsPage';
+import DashboardLayout from './components/layout/DashboardLayout';
+import ProtectedRoute from './routes/ProtectedRoute';
+import { useContext } from 'react';
+import { AppContext } from './context/AppProvider';
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const {token} = useContext(AppContext)
   return (
-    <LoginPage/>
+    <Routes>
+     
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/" element={<LoginPage />} />
+
+     
+      <Route element={<ProtectedRoute/>}>
+        <Route element={<DashboardLayout />}>
+          <Route path="/groups/:group_name/songs" element={<SongsPage />} />
+        </Route>
+      </Route>
+
+      
+      {/* <Route path="*" element={<NotFoundPage />} /> */}
+    </Routes>
   )
 }
 

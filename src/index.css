@@ -1,1 +1,30 @@
 @import "tailwindcss";
+
+@theme {
+  --color-app-bg: #000;
+  --color-app-surface: #121212;
+   --color-app-surface-hover: #242424;
+  --color-app-text: #e0e0e0;
+  --color-app-subtext: #828282;
+  --color-app-accent: #F2780C;
+  --color-app-accent-secundary: #3C8C9E;
+  --color-app-border: #212121;
+  --color-app-button-bg: #444444
+}
+
+@layer utilities {
+  .range-thumb-blue::-webkit-slider-thumb {
+    @apply bg-app-accent w-3 h-3 rounded-full cursor-pointer;
+    -webkit-appearance: none;
+    margin-top: -2px; /* para centrarlo verticalmente */
+  }
+
+  .range-thumb-blue::-moz-range-thumb {
+    @apply bg-app-accent w-3 h-3 rounded-full cursor-pointer;
+  }
+
+  .range-thumb-blue {
+    @apply appearance-none w-full h-1 bg-app-border rounded-lg;
+  }
+}
+
