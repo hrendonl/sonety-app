@@ -38,7 +38,7 @@ export default function FilterPanel({ isOpen, filters, setFilters }) {
   return (
     <div
       className={`
-        bg-gray-800 rounded-lg overflow-hidden
+        bg-app-surface-hover rounded-lg overflow-hidden
         transition-[max-height] duration-300 ease-in-out
         ${isOpen ? "max-h-96 opacity-100 p-4 mt-4" : "max-h-0 opacity-0"}
       `}

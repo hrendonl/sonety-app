@@ -126,7 +126,7 @@ export default function SongsPage() {
       {data?.list &&
         data.list.length > 0 &&
         data?.pagination.total_pages > 1 && (
-          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 pt-4 border-t border-app-surface-hover">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 pt-4 ">
             <p className="text-gray-400">
               Total:
               <span className="font-bold text-white pl-3">

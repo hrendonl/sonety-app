@@ -8,7 +8,7 @@ import {
   MdPeopleOutline,
   MdOutlineSettings
 } from "react-icons/md";
-import Logo from "../../assets/images/sonety_orange.png";
+import Logo from "../../assets/images/logo_azulin.png";
 import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";
