@@ -1,17 +1,28 @@
 # Sonety
 
-Sonety es una aplicación para administración de grupos musicales.
+Sonety es una aplicación para la **administración de grupos musicales**, diseñada para ser eficaz, elegante y moderna.
 
-Actualmente cuenta con los siguientes modulos que estan en construcción:
+## 🚀 Módulos en construcción
 
-- Eventos
-- Canciones
-- Miembros
-- Mensajes
-- Configuraciones
+- 🎤 **Eventos**
+- 🎶 **Canciones**
+- 👥 **Miembros**
+- 💬 **Mensajes**
+- ⚙️ **Configuraciones**
 
-## Instrucciones para levantar proyecto en local
+## 🛠️ Instrucciones para levantar el proyecto en local
 
-- Tener instalado Node.js para poder ejecutar el proyecto
-- Ejecutar el comando: npm install
-- por ultimo para levantar el proyecto ejecutar: npm run dev
+1. Tener instalado **Node.js** en tu máquina.  
+   - Puedes verificar la instalación ejecutando:
+     ```bash
+     node -v
+     npm -v
+     ```
+
+2. Instalar las dependencias del proyecto:  
+   ```bash
+   npm install
+
+3. Por ultimo ejecutar el siguiente comando:
+    ```bash
+   npm run dev
