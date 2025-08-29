@@ -7,6 +7,7 @@ import { getSongs } from "../../../api/songApi";
 import SearchBox from "../../../components/ui/SearchBox";
 import SongList from "../components/SongList";
 import { AppContext } from "../../../context/AppProvider";
+import { useSongs } from "../hooks/useSongs";
 import FilterPanel from "../components/FilterPanel";
 
 // Componente para el estado de carga (Skeleton)
@@ -44,19 +45,16 @@ export default function SongsPage() {
     tags: [],
   });
 
-  const { data, isLoading, isError, error, refetch } = useQuery({
-    queryKey: ["songs", currentPage, searchTerm, groupSelected, filters],
-    queryFn: () =>
-      getSongs(groupSelected.id, currentPage, searchTerm, filters).then(
-        (res) => res.data
-      ),
-    keepPreviousData: true,
-  });
+  const { data, isLoading, isError, error, refetch } = useSongs(
+    currentPage,
+    searchTerm,
+    groupSelected,
+    filters
+  );
 
   const handleSearch = async (query) => {
     setSearchTerm(query);
     setCurrentPage(1);
-    // No es necesario refetch aquí, React Query lo hace automáticamente al cambiar el queryKey
   };
 
   const renderContent = () => {
