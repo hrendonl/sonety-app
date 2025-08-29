@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../../assets/images/white_logo.png";
 import { MdSettings, MdLogout, MdMenu } from "react-icons/md";
 import { AppContext } from "../../context/AppProvider";
 
