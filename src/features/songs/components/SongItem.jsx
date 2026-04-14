@@ -4,6 +4,9 @@ import {
   MdPause,
   MdMoreVert,
   MdControlPoint,
+  MdAccessAlarm,
+  MdQueueMusic,
+  MdSpeed,
   MdOutlineVisibility,
 } from "react-icons/md";
 import { getImageYoutube } from "../../../utils/getImageYoutube";
@@ -154,14 +157,17 @@ export default function SongItem({ song, refetch }) {
 
       {/* Columnas 2, 3 y 4: Detalles (Tono, Tempo, Duración) */}
       <div className="hidden md:contents">
-        <p className="font-semibold text-gray-300 text-center">
-          {song.key_chord}
+        <p className="flex items-center justify-center gap-1.5 font-semibold text-gray-300">
+          <MdQueueMusic size={20} className="shrink-0" />
+          <span>{song.key_chord}</span>
         </p>
-        <p className="font-semibold text-gray-300 text-center">
-          {song.tempo_BPM} bpm
+        <p className="flex items-center justify-center gap-1.5 font-semibold text-gray-300">
+          <MdSpeed size={20} className="shrink-0" />
+          <span>{song.tempo_BPM} bpm</span>
         </p>
-        <p className="font-semibold text-gray-300 text-center">
-          {song.duration}
+        <p className="flex items-center justify-center gap-1.5 font-semibold text-gray-300">
+          <MdAccessAlarm size={20} className="shrink-0" />
+          <span>{song.duration}</span>
         </p>
       </div>
 
